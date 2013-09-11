@@ -38,7 +38,16 @@ public class LoginActivity extends Activity
 	{
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.login, menu);
+		
 		return true;
+	}
+	
+	/**
+	 * Login
+	 */
+	public void login(String name, String password)
+	{
+		finish();
 	}
 	
 	/**
@@ -49,9 +58,7 @@ public class LoginActivity extends Activity
 		@Override
 		public void onClick(View view)
 		{
-			User user = new User();
-			
-			
+			login(userNameEditText.getText().toString(), passwordEditText.getText().toString());
 		}
 	};
 }
