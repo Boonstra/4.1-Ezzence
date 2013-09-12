@@ -47,6 +47,8 @@ public class LoginActivity extends Activity
 	 */
 	public void login(String name, String password)
 	{
+		
+		
 		finish();
 	}
 	
