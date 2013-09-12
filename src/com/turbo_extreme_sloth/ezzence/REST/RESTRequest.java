@@ -1,12 +1,19 @@
 package com.turbo_extreme_sloth.ezzence.REST;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Locale;
-import java.util.Map.Entry;
+import java.util.Scanner;
+
+import android.os.AsyncTask;
 
 /**
- * 
+ * The RESTRequest class simplifies the process of making RESTful requests to the web address of choice.
  */
 public class RESTRequest
 {
@@ -15,8 +22,6 @@ public class RESTRequest
 	private HashMap<String, Object> values;
 	
 	/**
-	 * TODO Implement
-	 * 
 	 * @param address
 	 */
 	public RESTRequest(String address)
@@ -27,11 +32,9 @@ public class RESTRequest
 	}
 	
 	/**
-	 * TODO Implement
-	 * 
-	 * @return success
+	 * @throws RESTRequestException
 	 */
-	public boolean send()
+	public void send() throws RESTRequestException
 	{
 		String URI = address;
 		
@@ -39,16 +42,13 @@ public class RESTRequest
 		{
 			URI += "?";
 			
-			Iterator iterator = values.entrySet().iterator();
+			Iterator<HashMap.Entry<String, Object>> iterator = values.entrySet().iterator();
 			
 			while (iterator.hasNext())
 			{
-				Entry<String, Object> entry = (Entry<String, Object>) iterator.next();
+				HashMap.Entry<String, Object> entry = (HashMap.Entry<String, Object>) iterator.next();
 				
-				URI += entry.getKey() + "=" + entry.getValue();
-				
-				//Locale.US;
-				//finalBillEditText.setText(String.format("%.02f", finalBill));
+				URI += entry.getKey() + "=" + entry.getValue().toString();
 				
 				if (iterator.hasNext())
 				{
@@ -57,11 +57,18 @@ public class RESTRequest
 			}
 		}
 		
-		// TODO Send in new thread
-		
-		return false;
+		try
+		{
+			System.out.println(URI);
+			
+			new RESTRequestIssuer().execute(new URL(URI));
+		}
+		catch (MalformedURLException e)
+		{
+			throw new RESTRequestException();
+		}
 	}
-
+	
 	/**
 	 * @return address
 	 */
@@ -88,29 +95,63 @@ public class RESTRequest
 	}
 	
 	/**
-	 * @param key
-	 * @param value
+	 * RESTRequestIssuer issues all RESTful requests asynchronously.
 	 */
-	public void putInt(String key, int value)
+	private class RESTRequestIssuer extends AsyncTask<URL, Void, String>
 	{
-		values.put(key, value);
+		@Override
+		protected String doInBackground(URL... urls)
+		{
+			if (urls.length <= 0)
+			{
+				return null;
+			}
+			
+			try
+			{
+				// Open http connection
+				HttpURLConnection urlConnection = (HttpURLConnection) urls[0].openConnection();
+				
+				try
+				{
+					InputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
+					
+					// Trick to read all data from a stream in one line: https://weblogs.java.net/blog/pat/archive/2004/10/stupid_scanner_1.html
+					Scanner scanner = new Scanner(inputStream).useDelimiter("\\A");
+					
+					String result = scanner.hasNext() ? scanner.next() : null;
+					
+					scanner.close();
+
+					return result;
+				}
+				finally
+				{
+					urlConnection.disconnect();
+				}
+			}
+			catch (IOException e)
+			{
+				return null;
+			}
+		}
+		
+		@Override
+		protected void onPostExecute(String result)
+		{
+			if (result == null)
+			{
+				System.out.println("No result was returned");
+			}
+			else
+			{			
+				System.out.println(result);
+			}
+		}
 	}
 	
 	/**
-	 * @param key
-	 * @param value
+	 * 
 	 */
-	public void putDouble(String key, double value)
-	{
-		values.put(key, value);
-	}
-	
-	/**
-	 * @param key
-	 * @param value
-	 */
-	public void putFloat(String key, float value)
-	{
-		values.put(key, value);
-	}
+	public class RESTRequestException extends Exception { private static final long serialVersionUID = -1259925635751254377L; }
 }

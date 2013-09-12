@@ -1,17 +1,12 @@
 package com.turbo_extreme_sloth.ezzence.activities;
 
 import com.turbo_extreme_sloth.ezzence.R;
-import com.turbo_extreme_sloth.ezzence.R.layout;
-import com.turbo_extreme_sloth.ezzence.R.menu;
 import com.turbo_extreme_sloth.ezzence.User;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
-import android.view.View;
-import android.widget.EditText;
 
 public class MainActivity extends Activity
 {

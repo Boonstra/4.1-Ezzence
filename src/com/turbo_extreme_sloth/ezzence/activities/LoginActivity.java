@@ -1,10 +1,12 @@
 package com.turbo_extreme_sloth.ezzence.activities;
 
 import com.turbo_extreme_sloth.ezzence.R;
-import com.turbo_extreme_sloth.ezzence.User;
+import com.turbo_extreme_sloth.ezzence.REST.RESTRequest;
+import com.turbo_extreme_sloth.ezzence.REST.RESTRequest.RESTRequestException;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -45,11 +47,55 @@ public class LoginActivity extends Activity
 	/**
 	 * Login
 	 */
-	public void login(String name, String password)
+	public void login(String userName, String password)
 	{
+		// Username must not be empty
+		if (userName.length() <= 0)
+		{
+			AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+			
+			builder.setMessage(R.string.login_empty_userName);
+			builder.setPositiveButton(R.string.ok, null);
+			builder.show();
+			
+			return;
+		}
 		
+		// Password must not be empty
+		if (password.length() <= 0)
+		{
+			AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+
+			builder.setMessage(R.string.login_empty_password);
+			builder.setPositiveButton(R.string.ok, null);
+			builder.show();
+			
+			return;
+		}
 		
-		finish();
+		// Create new RESTRequest instance and fill it with user data
+		RESTRequest restRequest = new RESTRequest(getString(R.string.rest_request_base_url) + "login.php");
+		
+		restRequest.putString("username", userName);
+		restRequest.putString("password", password);
+		
+		try
+		{
+			// Send an asynchronous RESTful request
+			restRequest.send();
+		}
+		catch (RESTRequestException e)
+		{
+			AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+
+			builder.setMessage(R.string.rest_not_found);
+			builder.setPositiveButton(R.string.ok, null);			
+			builder.show();
+			
+			return;
+		}
+		
+		// TODO Do something on successful login
 	}
 	
 	/**
