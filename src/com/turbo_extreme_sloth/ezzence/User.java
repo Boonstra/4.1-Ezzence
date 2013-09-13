@@ -1,10 +1,16 @@
 package com.turbo_extreme_sloth.ezzence;
 
+import com.turbo_extreme_sloth.ezzence.REST.RESTRequest;
+import com.turbo_extreme_sloth.ezzence.REST.RESTRequestListener;
+
+import android.content.SharedPreferences;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
+ * The User class assists in transferring a user's data.
  * 
+ * As this class implements Parcelable it can be passed through intents and stored in SharedPreferences.
  */
 public class User implements Parcelable
 {
@@ -25,6 +31,8 @@ public class User implements Parcelable
 		}
 	};
 	
+	protected SharedPreferences userCredentials;
+	
 	protected String name;
 	protected String password;
 	protected String sessionID;
@@ -38,25 +46,19 @@ public class User implements Parcelable
 	 * @param password
 	 * @param sessionID
 	 * @param pin
+	 * @param type
 	 */
 	public User(String name, String password, String sessionID, String pin, int type)
 	{
-		System.out.println("New user created, named: " + name + " - Password: " + password + " - SessionID: " + sessionID + " - Pin: " + pin + " - Type: " );
+		System.out.println("USER: New user created, named: " + name + " - Password: " + password + " - SessionID: " + sessionID + " - Pin: " + pin + " - Type: " + type);
 		
 		this.name      = name;
 		this.password  = password;
 		this.sessionID = sessionID;
 		this.pin       = pin;
 		
+		// Set type checks if the passed type is an existing value in the Type enum
 		setType(type);
-	}
-	
-	/**
-	 * 
-	 */
-	public User(Parcel source)
-	{
-		System.out.println("-------------- This is freaking awesome");
 	}
 	
 	/**
@@ -148,6 +150,19 @@ public class User implements Parcelable
 		
 		this.type = Type.NORMAL_USER.getType();
 	}
+	
+	/**
+	 * Check if the user is logged in.
+	 * 
+	 * This method does not check whether or not a server request will be accepted,
+	 * but rather checks whether or not a sessionID is set.
+	 * 
+	 * @return isLoggedIn
+	 */
+	public boolean isLoggedIn()
+	{
+		return sessionID != null && sessionID.length() > 0;
+	}
 
 	@Override
 	public int describeContents()
@@ -156,19 +171,24 @@ public class User implements Parcelable
 	}
 
 	@Override
-	public void writeToParcel(Parcel dest, int flags)
+	public void writeToParcel(Parcel parcel, int flags)
 	{
-		dest.writeString(name);
-		dest.writeString(sessionID);
-		dest.writeString(pin);
+		parcel.writeString(name);
+		parcel.writeString(password);
+		parcel.writeString(sessionID);
+		parcel.writeString(pin);
+		parcel.writeInt(type);
 	}
 	
+	/**
+	 * 
+	 */
 	public static final User.Creator<User> CREATOR = new User.Creator<User>()
 	{
 		@Override
-		public User createFromParcel(Parcel source)
+		public User createFromParcel(Parcel parcel)
 		{
-			return new User(source);
+			return new User(parcel);
 		}
 
 		@Override
@@ -177,4 +197,16 @@ public class User implements Parcelable
 			return new User[size];
 		}
 	};
+	
+	/**
+	 * @param source
+	 */
+	protected User(Parcel parcel)
+	{
+		name      = parcel.readString();
+		password  = parcel.readString();
+		sessionID = parcel.readString();
+		pin       = parcel.readString();
+		type      = parcel.readInt();
+	}
 }

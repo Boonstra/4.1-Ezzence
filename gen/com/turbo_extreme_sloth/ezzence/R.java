@@ -24,46 +24,71 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f080004;
+        public static final int action_settings=0x7f08000c;
+        public static final int currentTemperatureTextView=0x7f080006;
         public static final int loginButtonButton=0x7f080003;
         public static final int loginPasswordEditText=0x7f080001;
         public static final int loginPinEditText=0x7f080002;
         public static final int loginUserNameEditText=0x7f080000;
+        public static final int setTemperatureButton=0x7f080009;
+        public static final int setTemperatureEditText=0x7f080008;
+        public static final int tableRow1=0x7f080004;
+        public static final int tableRow2=0x7f080007;
+        public static final int textView1=0x7f080005;
+        public static final int unlockButton=0x7f08000b;
+        public static final int unlockPinEditText=0x7f08000a;
     }
     public static final class layout {
         public static final int activity_login=0x7f030000;
         public static final int activity_main=0x7f030001;
+        public static final int activity_unlock=0x7f030002;
     }
     public static final class menu {
         public static final int login=0x7f070000;
         public static final int main=0x7f070001;
+        public static final int unlock=0x7f070002;
     }
     public static final class string {
         public static final int action_settings=0x7f050001;
         public static final int app_name=0x7f050000;
-        public static final int login_button_text=0x7f050006;
-        public static final int login_empty_password=0x7f050008;
-        public static final int login_empty_userName=0x7f050007;
-        public static final int login_failed=0x7f05000b;
-        public static final int login_password_encryption_error=0x7f05000a;
-        public static final int login_password_hint=0x7f050004;
-        public static final int login_pin_hint=0x7f050005;
-        public static final int login_pin_too_short=0x7f050009;
+        public static final int login_button_text=0x7f05000c;
+        public static final int login_empty_password=0x7f05000e;
+        public static final int login_empty_userName=0x7f05000d;
+        public static final int login_failed=0x7f050011;
+        public static final int login_password_encryption_error=0x7f050010;
+        public static final int login_password_hint=0x7f05000a;
+        public static final int login_pin_hint=0x7f05000b;
+        public static final int login_pin_too_short=0x7f05000f;
         /**  LoginActivity 
          */
-        public static final int login_userName_hint=0x7f050003;
-        public static final int login_wrong_credentials=0x7f05000c;
+        public static final int login_userName_hint=0x7f050009;
+        public static final int login_wrong_credentials=0x7f050012;
+        /**  MainActivity 
+         */
+        public static final int main_current_temperare=0x7f050003;
+        public static final int main_empty_temperature=0x7f050006;
+        public static final int main_set_temperare=0x7f050005;
+        public static final int main_set_temperare_hint=0x7f050004;
+        public static final int main_temperature_not_set=0x7f050007;
+        public static final int main_temperature_set=0x7f050008;
         public static final int ok=0x7f050002;
-        public static final int rest_not_found=0x7f050014;
+        public static final int rest_not_found=0x7f05001e;
         /**  REST 
          */
-        public static final int rest_request_base_url=0x7f05000d;
-        public static final int rest_request_login=0x7f05000e;
-        public static final int rest_request_requestedTemperatures=0x7f050010;
-        public static final int rest_request_setTemperature=0x7f050011;
-        public static final int rest_request_setTemperatureProfile=0x7f050012;
-        public static final int rest_request_temperature=0x7f05000f;
-        public static final int rest_request_usageStats=0x7f050013;
+        public static final int rest_request_base_url=0x7f050017;
+        public static final int rest_request_login=0x7f050018;
+        public static final int rest_request_requestedTemperatures=0x7f05001a;
+        public static final int rest_request_setTemperature=0x7f05001b;
+        public static final int rest_request_setTemperatureProfile=0x7f05001c;
+        public static final int rest_request_temperature=0x7f050019;
+        public static final int rest_request_usageStats=0x7f05001d;
+        public static final int title_activity_unlock=0x7f05001f;
+        public static final int unlock_button_text=0x7f050014;
+        public static final int unlock_failed=0x7f050015;
+        /**  UnlockActivity 
+         */
+        public static final int unlock_pin_hint=0x7f050013;
+        public static final int unlock_wrong_pin=0x7f050016;
     }
     public static final class style {
         /** 

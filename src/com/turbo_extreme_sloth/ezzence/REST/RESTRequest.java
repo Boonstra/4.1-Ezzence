@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -19,21 +18,25 @@ import android.os.AsyncTask;
 public class RESTRequest
 {
 	private String address;
+	private String ID;
 	
 	private HashMap<String, Object> values;
 	
-	private ArrayList<RESTRequestListener> eventListeners;
+	private RESTRequestListener eventListener;
 	
 	/**
+	 * Constructs a new RESTRequest with the address to issue the request on,
+	 * and the ID that will be sent along with the fired event to be able to recognize your event.
+	 * 
 	 * @param address
+	 * @param ID
 	 */
-	public RESTRequest(String address)
+	public RESTRequest(String address, String ID)
 	{
 		this.address = address;
+		this.ID      = ID;
 		
 		values = new HashMap<String, Object>();
-		
-		eventListeners = new ArrayList<RESTRequestListener>();
 	}
 	
 	/**
@@ -44,7 +47,7 @@ public class RESTRequest
 	 * 
 	 * @throws RESTRequestException
 	 */
-	public void send() throws RESTRequestException
+	public void send()
 	{
 		String url = address;
 		
@@ -71,10 +74,7 @@ public class RESTRequest
 		{
 			new RESTRequestIssuer().execute(new URL(url));
 		}
-		catch (MalformedURLException e)
-		{
-			throw new RESTRequestException();
-		}
+		catch (MalformedURLException e) { }
 	}
 	
 	/**
@@ -94,6 +94,22 @@ public class RESTRequest
 	}
 	
 	/**
+	 * @return ID
+	 */
+	public String getID()
+	{
+		return ID;
+	}
+
+	/**
+	 * @param address
+	 */
+	public void setID(String ID)
+	{
+		this.ID = ID;
+	}
+	
+	/**
 	 * @param key
 	 * @param value
 	 */
@@ -105,9 +121,9 @@ public class RESTRequest
 	/**
 	 * @param eventListener
 	 */
-	public void addEventListener(RESTRequestListener eventListener)
+	public void setEventListener(RESTRequestListener eventListener)
 	{
-		eventListeners.add(eventListener);
+		this.eventListener = eventListener; 
 	}
 	
 	/**
@@ -156,12 +172,10 @@ public class RESTRequest
 		@Override
 		protected void onPostExecute(String result)
 		{
-			// Create new RESTRequestEvent to be handled by all listeners
-			RESTRequestEvent event = new RESTRequestEvent(this, result);
-			
-			for (RESTRequestListener eventListener : eventListeners)
+			if (eventListener instanceof RESTRequestListener)
 			{
-				eventListener.handleRESTRequestEvent(event);
+				// Create new RESTRequestEvent to be handled by the event listener
+				eventListener.handleRESTRequestEvent(new RESTRequestEvent(this, result, ID));
 			}
 		}
 	}
