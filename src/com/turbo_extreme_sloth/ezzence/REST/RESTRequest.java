@@ -69,14 +69,10 @@ public class RESTRequest
 		
 		try
 		{
-			System.out.println(url);
-			
 			new RESTRequestIssuer().execute(new URL(url));
 		}
 		catch (MalformedURLException e)
 		{
-			System.out.println(e.getMessage());
-			
 			throw new RESTRequestException();
 		}
 	}
@@ -152,10 +148,7 @@ public class RESTRequest
 
 				return result;
 			}
-			catch (IOException e)
-			{
-				System.out.println("IOException - " + e.getMessage());
-			}
+			catch (IOException e) { }
 			
 			return "";
 		}

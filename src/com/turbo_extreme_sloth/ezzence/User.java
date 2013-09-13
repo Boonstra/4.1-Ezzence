@@ -8,39 +8,47 @@ import android.os.Parcelable;
  */
 public class User implements Parcelable
 {
-	private String name;
-	private String sessionID;
-	
-	/**
-	 * Constructor
-	 */
-	public User()
+	public enum Type
 	{
-		this((String) null);
-	}
+		SUPER_USER (1), NORMAL_USER (2);
+		
+		private int type;
+		
+		private Type(int type)
+		{
+			this.type = type;
+		}
+		
+		public int getType()
+		{
+			return type;
+		}
+	};
+	
+	protected String name;
+	protected String password;
+	protected String sessionID;
+	protected String pin;
+	protected int    type;
 	
 	/**
 	 * Constructor
 	 * 
 	 * @param name
-	 */
-	public User(String name)
-	{
-		this(name, null);
-	}
-	
-	/**
-	 * Constructor
-	 * 
-	 * @param name
+	 * @param password
 	 * @param sessionID
+	 * @param pin
 	 */
-	public User(String name, String sessionID)
+	public User(String name, String password, String sessionID, String pin, int type)
 	{
-		System.out.println("New user created, named: " + name + " - SessionID: " + sessionID);
+		System.out.println("New user created, named: " + name + " - Password: " + password + " - SessionID: " + sessionID + " - Pin: " + pin + " - Type: " );
 		
 		this.name      = name;
+		this.password  = password;
 		this.sessionID = sessionID;
+		this.pin       = pin;
+		
+		setType(type);
 	}
 	
 	/**
@@ -68,6 +76,22 @@ public class User implements Parcelable
 	}
 	
 	/**
+	 * @return password
+	 */
+	public String getPassword()
+	{
+		return password;
+	}
+
+	/**
+	 * @param password
+	 */
+	public void setPassword(String password)
+	{
+		this.password = password;
+	}
+	
+	/**
 	 * @return sessionID
 	 */
 	public String getSessionID()
@@ -82,6 +106,48 @@ public class User implements Parcelable
 	{
 		this.sessionID = sessionID;
 	}
+	
+	/**
+	 * @return pin
+	 */
+	public String getPin()
+	{
+		return pin;
+	}
+
+	/**
+	 * @param pin
+	 */
+	public void setPin(String pin)
+	{
+		this.pin = pin;
+	}
+	
+	/**
+	 * @return type
+	 */
+	public int getType()
+	{
+		return type;
+	}
+
+	/**
+	 * @param type
+	 */
+	public void setType(int type)
+	{
+		for (Type enumValue : Type.values())
+		{
+			if (enumValue.getType() == type)
+			{
+				this.type = type;
+				
+				return;
+			}
+		}
+		
+		this.type = Type.NORMAL_USER.getType();
+	}
 
 	@Override
 	public int describeContents()
@@ -94,6 +160,7 @@ public class User implements Parcelable
 	{
 		dest.writeString(name);
 		dest.writeString(sessionID);
+		dest.writeString(pin);
 	}
 	
 	public static final User.Creator<User> CREATOR = new User.Creator<User>()

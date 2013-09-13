@@ -8,13 +8,23 @@
     <!-- LoginActivity -->
     <string name="login_userName_hint">Username</string>
     <string name="login_password_hint">Password</string>
+    <string name="login_pin_hint">Local PIN</string>
     <string name="login_button_text">Login</string>
     <string name="login_empty_userName">Please fill in a user name</string>
     <string name="login_empty_password">Please fill in a password</string>
+    <string name="login_pin_too_short">The local pin number should consist of at least 5 digits</string>
     <string name="login_password_encryption_error">Password could not be send securely</string>
+    <string name="login_failed">Login failed!</string>
+    <string name="login_wrong_credentials">User name and password are incorrect</string>
     
     <!-- REST -->
 	<string name="rest_request_base_url">http://rawr.eu/ezzence/api/</string>
+	<string name="rest_request_login">login.php</string>
+	<string name="rest_request_temperature">temperature.php</string>
+	<string name="rest_request_requestedTemperatures">requestedTemperatures.php</string>
+	<string name="rest_request_setTemperature">setTemperature.php</string>
+	<string name="rest_request_setTemperatureProfile">setTemperatureProfile.php</string>
+	<string name="rest_request_usageStats">usageStats.php</string>
 	<string name="rest_not_found">Server connection could not be established</string>
     
 </resources>

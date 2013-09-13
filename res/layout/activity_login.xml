@@ -16,8 +16,9 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:ems="10"
-        android:hint="@string/login_userName_hint" >
+        android:ems="12"
+        android:hint="@string/login_userName_hint"
+        android:inputType="textPersonName" >
 
         <requestFocus />
     </EditText>
@@ -29,17 +30,30 @@
         android:layout_below="@+id/loginUserNameEditText"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:ems="7"
+        android:ems="9"
         android:hint="@string/login_password_hint"
         android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/loginPinEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/loginPasswordEditText"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:maxLength="5"
+        android:ems="6"
+        android:hint="@string/login_pin_hint"
+        android:inputType="numberPassword" />
 
     <Button
         android:id="@+id/loginButtonButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/loginPasswordEditText"
+        android:layout_below="@+id/loginPinEditText"
         android:layout_centerHorizontal="true"
-        android:text="@string/login_button_text"
-        android:onClick="loginButtonClicked" />
+        android:layout_marginTop="60dp"
+        android:onClick="loginButtonClicked"
+        android:text="@string/login_button_text" />
 
 </RelativeLayout>

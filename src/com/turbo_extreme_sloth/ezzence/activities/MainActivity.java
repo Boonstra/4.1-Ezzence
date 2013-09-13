@@ -10,7 +10,7 @@ import android.view.Menu;
 
 public class MainActivity extends Activity
 {
-	private static final String CURRENT_USER_KEY = "CURRENT_USER";
+	protected static final String CURRENT_USER_KEY = "CURRENT_USER";
 	
 	public User currentUser;
 	
@@ -19,9 +19,22 @@ public class MainActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		
-		setContentView(R.layout.activity_main);
+		Intent intent = getIntent();
 		
-		startActivity(new Intent(this, LoginActivity.class));
+		User user = intent.getParcelableExtra("user");
+		
+		if (user instanceof User)
+		{
+			System.out.println("User instance found in intent");
+		}
+		else
+		{
+			System.out.println("User instance not found in intent");
+			
+			setContentView(R.layout.activity_main);
+		
+			startActivity(new Intent(this, LoginActivity.class));
+		}
 		
 		//showLoginScreen();
 		
@@ -66,17 +79,4 @@ public class MainActivity extends Activity
 		
 		outState.putParcelable(CURRENT_USER_KEY, currentUser);
 	}
-	
-	public void showLoginScreen()
-	{
-    	Intent intent = new Intent(this, LoginActivity.class);
-    	
-//    	EditText editText = (EditText) findViewById(R.id.edit_message);
-//    	
-//    	String message = editText.getText().toString();
-//    	
-//    	intent.putExtra(EXTRA_MESSAGE, message);
-    	
-    	startActivity(intent);
-    }
 }
