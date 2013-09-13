@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -21,6 +22,8 @@ public class RESTRequest
 	
 	private HashMap<String, Object> values;
 	
+	private ArrayList<RESTRequestListener> eventListeners;
+	
 	/**
 	 * @param address
 	 */
@@ -29,18 +32,25 @@ public class RESTRequest
 		this.address = address;
 		
 		values = new HashMap<String, Object>();
+		
+		eventListeners = new ArrayList<RESTRequestListener>();
 	}
 	
 	/**
+	 * The send method is an asynchronous method. After finishing, this method does not return any data.
+	 * 
+	 * When the RESTRequest has finished, a RESTRequestEvent is fired. This event contains the result data
+	 * of the RESTful request.
+	 * 
 	 * @throws RESTRequestException
 	 */
 	public void send() throws RESTRequestException
 	{
-		String URI = address;
+		String url = address;
 		
 		if (!values.isEmpty())
 		{
-			URI += "?";
+			url += "?";
 			
 			Iterator<HashMap.Entry<String, Object>> iterator = values.entrySet().iterator();
 			
@@ -48,23 +58,25 @@ public class RESTRequest
 			{
 				HashMap.Entry<String, Object> entry = (HashMap.Entry<String, Object>) iterator.next();
 				
-				URI += entry.getKey() + "=" + entry.getValue().toString();
+				url += entry.getKey() + "=" + entry.getValue().toString();
 				
 				if (iterator.hasNext())
 				{
-					URI += "&";
+					url += "&";
 				}
 			}
 		}
 		
 		try
 		{
-			System.out.println(URI);
+			System.out.println(url);
 			
-			new RESTRequestIssuer().execute(new URL(URI));
+			new RESTRequestIssuer().execute(new URL(url));
 		}
 		catch (MalformedURLException e)
 		{
+			System.out.println(e.getMessage());
+			
 			throw new RESTRequestException();
 		}
 	}
@@ -95,6 +107,14 @@ public class RESTRequest
 	}
 	
 	/**
+	 * @param eventListener
+	 */
+	public void addEventListener(RESTRequestListener eventListener)
+	{
+		eventListeners.add(eventListener);
+	}
+	
+	/**
 	 * RESTRequestIssuer issues all RESTful requests asynchronously.
 	 */
 	private class RESTRequestIssuer extends AsyncTask<URL, Void, String>
@@ -104,48 +124,51 @@ public class RESTRequest
 		{
 			if (urls.length <= 0)
 			{
-				return null;
+				return "";
 			}
 			
 			try
-			{
+			{				
 				// Open http connection
 				HttpURLConnection urlConnection = (HttpURLConnection) urls[0].openConnection();
 				
-				try
-				{
-					InputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
-					
-					// Trick to read all data from a stream in one line: https://weblogs.java.net/blog/pat/archive/2004/10/stupid_scanner_1.html
-					Scanner scanner = new Scanner(inputStream).useDelimiter("\\A");
-					
-					String result = scanner.hasNext() ? scanner.next() : null;
-					
-					scanner.close();
+				InputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
 
-					return result;
-				}
-				finally
+				// Trick to read all data from a stream in one line: https://weblogs.java.net/blog/pat/archive/2004/10/stupid_scanner_1.html
+				Scanner scanner = new Scanner(inputStream).useDelimiter("\\A");
+				
+				String result = "";
+				
+				while (scanner.hasNext())
 				{
-					urlConnection.disconnect();
+					result += scanner.next();
 				}
+				
+				scanner.close();
+				
+				inputStream.close();
+				
+				urlConnection.disconnect();
+
+				return result;
 			}
 			catch (IOException e)
 			{
-				return null;
+				System.out.println("IOException - " + e.getMessage());
 			}
+			
+			return "";
 		}
 		
 		@Override
 		protected void onPostExecute(String result)
 		{
-			if (result == null)
+			// Create new RESTRequestEvent to be handled by all listeners
+			RESTRequestEvent event = new RESTRequestEvent(this, result);
+			
+			for (RESTRequestListener eventListener : eventListeners)
 			{
-				System.out.println("No result was returned");
-			}
-			else
-			{			
-				System.out.println(result);
+				eventListener.handleRESTRequestEvent(event);
 			}
 		}
 	}

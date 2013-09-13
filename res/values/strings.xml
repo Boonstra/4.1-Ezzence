@@ -11,9 +11,10 @@
     <string name="login_button_text">Login</string>
     <string name="login_empty_userName">Please fill in a user name</string>
     <string name="login_empty_password">Please fill in a password</string>
+    <string name="login_password_encryption_error">Password could not be send securely</string>
     
     <!-- REST -->
-	<string name="rest_request_base_url">http://raaaaaaaaaaaaaaaaaaaaaa2awr.eu/ezzence/api/</string>
+	<string name="rest_request_base_url">http://rawr.eu/ezzence/api/</string>
 	<string name="rest_not_found">Server connection could not be established</string>
     
 </resources>
