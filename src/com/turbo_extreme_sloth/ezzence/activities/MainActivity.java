@@ -4,7 +4,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.turbo_extreme_sloth.ezzence.R;
-import com.turbo_extreme_sloth.ezzence.UnlockActivity;
 import com.turbo_extreme_sloth.ezzence.User;
 import com.turbo_extreme_sloth.ezzence.REST.RESTRequest;
 import com.turbo_extreme_sloth.ezzence.REST.RESTRequestEvent;

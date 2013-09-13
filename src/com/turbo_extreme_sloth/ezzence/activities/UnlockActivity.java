@@ -1,7 +1,11 @@
-package com.turbo_extreme_sloth.ezzence;
+package com.turbo_extreme_sloth.ezzence.activities;
 
-import com.turbo_extreme_sloth.ezzence.activities.LoginActivity;
-import com.turbo_extreme_sloth.ezzence.activities.MainActivity;
+import com.turbo_extreme_sloth.ezzence.R;
+import com.turbo_extreme_sloth.ezzence.User;
+import com.turbo_extreme_sloth.ezzence.R.id;
+import com.turbo_extreme_sloth.ezzence.R.layout;
+import com.turbo_extreme_sloth.ezzence.R.menu;
+import com.turbo_extreme_sloth.ezzence.R.string;
 
 import android.os.Bundle;
 import android.app.Activity;

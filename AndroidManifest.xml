@@ -32,7 +32,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.turbo_extreme_sloth.ezzence.UnlockActivity"
+            android:name="com.turbo_extreme_sloth.ezzence.activities.UnlockActivity"
             android:label="@string/app_name" >
         </activity>
     </application>
