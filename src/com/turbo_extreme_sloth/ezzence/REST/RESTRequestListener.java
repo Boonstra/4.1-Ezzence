@@ -1,6 +1,12 @@
-package com.turbo_extreme_sloth.ezzence.REST;
+package com.turbo_extreme_sloth.ezzence.rest;
+
+import com.turbo_extreme_sloth.ezzence.rest.RESTRequestEvent;
 
 public interface RESTRequestListener
 {
-	public void handleRESTRequestEvent(RESTRequestEvent event);
+	void RESTRequestOnPreExecute(RESTRequestEvent event);
+	
+	void RESTRequestOnProgressUpdate(RESTRequestEvent event);
+	
+	void RESTRequestOnPostExecute(RESTRequestEvent event);
 }

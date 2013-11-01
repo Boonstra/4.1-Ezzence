@@ -1,8 +1,5 @@
 package com.turbo_extreme_sloth.ezzence;
 
-import com.turbo_extreme_sloth.ezzence.REST.RESTRequest;
-import com.turbo_extreme_sloth.ezzence.REST.RESTRequestListener;
-
 import android.content.SharedPreferences;
 import android.os.Parcel;
 import android.os.Parcelable;

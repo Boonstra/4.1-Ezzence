@@ -5,9 +5,9 @@ import org.json.JSONObject;
 
 import com.turbo_extreme_sloth.ezzence.R;
 import com.turbo_extreme_sloth.ezzence.User;
-import com.turbo_extreme_sloth.ezzence.REST.RESTRequest;
-import com.turbo_extreme_sloth.ezzence.REST.RESTRequestEvent;
-import com.turbo_extreme_sloth.ezzence.REST.RESTRequestListener;
+import com.turbo_extreme_sloth.ezzence.rest.RESTRequest;
+import com.turbo_extreme_sloth.ezzence.rest.RESTRequestEvent;
+import com.turbo_extreme_sloth.ezzence.rest.RESTRequestListener;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -142,9 +142,9 @@ public class MainActivity extends Activity implements RESTRequestListener
 		restRequest.putString("temperature", temperature);
 		
 		// Add event listener
-		restRequest.setEventListener(this);
+		restRequest.addEventListener(this);
 		
-		restRequest.send();
+		restRequest.execute();
 	}
 	
 	/**
@@ -158,9 +158,9 @@ public class MainActivity extends Activity implements RESTRequestListener
 		restRequest.putString("sessionID", currentUser.getSessionID());
 		
 		// Add event listener
-		restRequest.setEventListener(this);
+		restRequest.addEventListener(this);
 		
-		restRequest.send();
+		restRequest.execute();
 	}
 	
 	/**
@@ -191,9 +191,9 @@ public class MainActivity extends Activity implements RESTRequestListener
 			restRequest.putString("password", password);
 			
 			// Add event listener
-			restRequest.setEventListener(this);
+			restRequest.addEventListener(this);
 			
-			restRequest.send();
+			restRequest.execute();
 			
 			return;
 		}
@@ -202,23 +202,6 @@ public class MainActivity extends Activity implements RESTRequestListener
 		startActivity(new Intent(this, LoginActivity.class));
 		
 		finish();
-	}
-
-	@Override
-	public void handleRESTRequestEvent(RESTRequestEvent event)
-	{
-		if (event.getID().equals(UNLOCK_EVENT_ID))
-		{
-			handleRESTRequestUnlockEvent(event);
-		}
-		else if (event.getID().equals(GET_CURRENT_TEMPERATURE_ID))
-		{
-			handleRESTRequestGetCurrentTemperature(event);
-		}
-		else if (event.getID().equals(SET_TEMPERATURE_ID))
-		{
-			handleRESTRequestSetTemperature(event);
-		}
 	}
 	
 	/**
@@ -326,5 +309,28 @@ public class MainActivity extends Activity implements RESTRequestListener
 			updateCurrentTemperature();
 		}
 		catch (JSONException e) { }
+	}
+
+	@Override
+	public void RESTRequestOnPreExecute(RESTRequestEvent event) { }
+
+	@Override
+	public void RESTRequestOnProgressUpdate(RESTRequestEvent event) { }
+
+	@Override
+	public void RESTRequestOnPostExecute(RESTRequestEvent event)
+	{
+		if (event.getID().equals(UNLOCK_EVENT_ID))
+		{
+			handleRESTRequestUnlockEvent(event);
+		}
+		else if (event.getID().equals(GET_CURRENT_TEMPERATURE_ID))
+		{
+			handleRESTRequestGetCurrentTemperature(event);
+		}
+		else if (event.getID().equals(SET_TEMPERATURE_ID))
+		{
+			handleRESTRequestSetTemperature(event);
+		}
 	}
 }
