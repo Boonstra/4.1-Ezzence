@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- General -->
     <string name="app_name">Ezzence</string>
     <string name="action_settings">Settings</string>
     <string name="ok">OK</string>
+    <string name="loading">Loading, please wait</string>
     
-    <!-- MainActivity -->
+    <!-- Temperature -->
     <string name="main_current_temperare">Current Temperature:</string>
     <string name="main_set_temperare_hint">Set Temperature</string>
     <string name="main_set_temperare">Set</string>
@@ -13,7 +15,7 @@
     <string name="main_temperature_not_set">Something went wrong while trying to set the temperature</string>
     <string name="main_temperature_set">Temperature successfully set</string>
 
-    <!-- LoginActivity -->
+    <!-- Session login -->
     <string name="login_userName_hint">Username</string>
     <string name="login_password_hint">Password</string>
     <string name="login_pin_hint">New Local PIN</string>
@@ -24,8 +26,12 @@
     <string name="login_password_encryption_error">Password could not be send securely</string>
     <string name="login_failed">Login failed!</string>
     <string name="login_wrong_credentials">User name and password are incorrect</string>
+    
+    <!-- Session logout -->
+    <string name="switch_user_button_text">Log out</string>
+    <string name="logout_button_text">Log out</string>
 
-    <!-- UnlockActivity -->
+    <!-- Session unlock -->
     <string name="unlock_pin_hint">Local PIN</string>
     <string name="unlock_button_text">Unlock</string>
     <string name="unlock_failed">Unlock failed!</string>

@@ -12,6 +12,7 @@ import com.turbo_extreme_sloth.ezzence.rest.RESTRequestListener;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.Menu;
@@ -19,6 +20,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class LoginActivity extends Activity implements RESTRequestListener
 {
@@ -33,6 +35,8 @@ public class LoginActivity extends Activity implements RESTRequestListener
 	protected Button loginButtonButton;
 	
 	protected User lastLoginAttemptUser;
+	
+	protected ProgressDialog progressDialog;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -111,7 +115,6 @@ public class LoginActivity extends Activity implements RESTRequestListener
 		restRequest.putString("username", userName);
 		restRequest.putString("password", password);
 		
-		// Add event listeners
 		restRequest.addEventListener(this);
 		
 		// Send an asynchronous RESTful request
@@ -183,11 +186,7 @@ public class LoginActivity extends Activity implements RESTRequestListener
 			// The server couldn't be reached, as no message is set
 			if (message == null)
 			{
-				AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-		
-				builder.setMessage(R.string.rest_not_found);
-				builder.setPositiveButton(R.string.ok, null);			
-				builder.show();
+				Toast.makeText(getApplicationContext(), getResources().getString(R.string.rest_not_found), Toast.LENGTH_SHORT).show();
 			}
 			// The server did not accept the passed user credentials
 			else
@@ -215,14 +214,18 @@ public class LoginActivity extends Activity implements RESTRequestListener
 	};
 
 	@Override
-	public void RESTRequestOnPreExecute(RESTRequestEvent event) { }
-
-	@Override
-	public void RESTRequestOnProgressUpdate(RESTRequestEvent event) { }
+	public void RESTRequestOnPreExecute(RESTRequestEvent event)
+	{
+		progressDialog = new ProgressDialog(this);
+		progressDialog.setTitle(getResources().getString(R.string.loading));
+		progressDialog.show();
+	}
 
 	@Override
 	public void RESTRequestOnPostExecute(RESTRequestEvent event)
 	{
+		progressDialog.dismiss();
+		
 		if (event.getID().equals(LOGIN_EVENT_ID))
 		{
 			handleRESTRequestLoginEvent(event);

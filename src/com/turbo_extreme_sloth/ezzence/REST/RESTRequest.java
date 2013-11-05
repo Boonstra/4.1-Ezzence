@@ -445,18 +445,6 @@ public class RESTRequest extends AsyncTask<Void, Void, String>
 	}
 	
 	@Override
-	protected void onProgressUpdate(Void... voids)
-	{
-		super.onProgressUpdate(voids);
-		
-		for (RESTRequestListener eventListener : eventListeners)
-		{
-			// Create new RESTRequestEvent to be handled by the event listener
-			eventListener.RESTRequestOnProgressUpdate(new RESTRequestEvent(this, ID));
-		}
-	}
-	
-	@Override
 	protected void onPostExecute(String result)
 	{
 		running = false;

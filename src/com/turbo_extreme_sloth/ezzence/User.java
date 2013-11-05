@@ -1,6 +1,5 @@
 package com.turbo_extreme_sloth.ezzence;
 
-import android.content.SharedPreferences;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -28,7 +27,7 @@ public class User implements Parcelable
 		}
 	};
 	
-	protected SharedPreferences userCredentials;
+	//protected SharedPreferences userCredentials;
 	
 	protected String name;
 	protected String password;
