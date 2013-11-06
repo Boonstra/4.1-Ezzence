@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.turbo_extreme_sloth.ezzence.CurrentUser;
 import com.turbo_extreme_sloth.ezzence.R;
 import com.turbo_extreme_sloth.ezzence.User;
 import com.turbo_extreme_sloth.ezzence.rest.RESTRequest;
@@ -45,32 +46,41 @@ public class MainActivity extends Activity implements RESTRequestListener
 	{
 		super.onCreate(savedInstanceState);
 		
-		userCredentials = getSharedPreferences("userCredentials", MODE_PRIVATE);
-		
-		// When the intent contains a parceled user instance, the user just logged in
-		Intent intent = getIntent();
-		
-		currentUser = intent.getParcelableExtra("user");
-		
-		// Login user
-		if (!(currentUser instanceof User))
+		if (!CurrentUser.isLoggedIn())
 		{
-			login(savedInstanceState);
+			startActivity(new Intent(this, LoginActivity.class));
 			
-			return;
+			//CurrentUser.performLogin(this, savedInstanceState);
 		}
 		
-		setContentView(R.layout.activity_main);
+		System.out.println("------------------------- lookhere");
 		
-		currentTemperatureTextView = (TextView) findViewById(R.id.currentTemperatureTextView);
-		
-		setTemperatureEditText = (EditText) findViewById(R.id.setTemperatureEditText);
-		
-		setTemperatureButton = (Button) findViewById(R.id.setTemperatureButton);
-		
-		setTemperatureButton.setOnClickListener(setTemperatureButtonOnClickListener);
-		
-		updateCurrentTemperature();
+//		userCredentials = getSharedPreferences("userCredentials", MODE_PRIVATE);
+//		
+//		// When the intent contains a parceled user instance, the user just logged in
+//		Intent intent = getIntent();
+//		
+//		currentUser = intent.getParcelableExtra("user");
+//		
+//		// Login user
+//		if (!(currentUser instanceof User))
+//		{
+//			login(savedInstanceState);
+//			
+//			return;
+//		}
+//		
+//		setContentView(R.layout.activity_main);
+//		
+//		currentTemperatureTextView = (TextView) findViewById(R.id.currentTemperatureTextView);
+//		
+//		setTemperatureEditText = (EditText) findViewById(R.id.setTemperatureEditText);
+//		
+//		setTemperatureButton = (Button) findViewById(R.id.setTemperatureButton);
+//		
+//		setTemperatureButton.setOnClickListener(setTemperatureButtonOnClickListener);
+//		
+//		updateCurrentTemperature();
 	}
 
 	@Override
