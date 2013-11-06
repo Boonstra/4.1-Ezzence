@@ -62,7 +62,7 @@ public final class R {
         public static final int login_password_hint=0x7f05000b;
         public static final int login_pin_hint=0x7f05000c;
         public static final int login_pin_too_short=0x7f050010;
-        /**  Session 
+        /**  Session login 
          */
         public static final int login_userName_hint=0x7f05000a;
         public static final int login_wrong_credentials=0x7f050013;
@@ -86,11 +86,13 @@ public final class R {
         public static final int rest_request_setTemperatureProfile=0x7f05001f;
         public static final int rest_request_temperature=0x7f05001c;
         public static final int rest_request_usageStats=0x7f050020;
+        /**  Session logout 
+         */
         public static final int switch_user_button_text=0x7f050014;
         public static final int title_activity_unlock=0x7f050022;
         public static final int unlock_button_text=0x7f050017;
         public static final int unlock_failed=0x7f050018;
-        /**  UnlockActivity 
+        /**  Session unlock 
          */
         public static final int unlock_pin_hint=0x7f050016;
         public static final int unlock_wrong_pin=0x7f050019;
