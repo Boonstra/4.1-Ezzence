@@ -3,18 +3,11 @@ package com.turbo_extreme_sloth.ezzence.activities;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.turbo_extreme_sloth.ezzence.R;
-import com.turbo_extreme_sloth.ezzence.User;
-import com.turbo_extreme_sloth.ezzence.rest.RESTRequest;
-import com.turbo_extreme_sloth.ezzence.rest.RESTRequestEvent;
-import com.turbo_extreme_sloth.ezzence.rest.RESTRequestListener;
-
-import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,19 +15,28 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.turbo_extreme_sloth.ezzence.CurrentUser;
+import com.turbo_extreme_sloth.ezzence.R;
+import com.turbo_extreme_sloth.ezzence.SharedPreferencesHelper;
+import com.turbo_extreme_sloth.ezzence.User;
+import com.turbo_extreme_sloth.ezzence.rest.RESTRequest;
+import com.turbo_extreme_sloth.ezzence.rest.RESTRequestEvent;
+import com.turbo_extreme_sloth.ezzence.rest.RESTRequestListener;
+
 public class LoginActivity extends Activity implements RESTRequestListener
 {
+	/** The ID for recognizing a login event. */
 	protected static final String LOGIN_EVENT_ID = "loginEvent";
 	
-	protected SharedPreferences userCredentials;
+	/** Stores the user information during the request. */
+	protected User user;
 	
+	/** Elements. */
 	protected EditText userNameEditText;
 	protected EditText passwordEditText;
 	protected EditText loginPinEditText;
 
 	protected Button loginButtonButton;
-	
-	protected User lastLoginAttemptUser;
 	
 	protected ProgressDialog progressDialog;
 	
@@ -43,9 +45,24 @@ public class LoginActivity extends Activity implements RESTRequestListener
 	{
 		super.onCreate(savedInstanceState);
 		
-		setContentView(R.layout.activity_login);
+		User user = SharedPreferencesHelper.getUser(this);
 		
-		userCredentials = getSharedPreferences("userCredentials", MODE_PRIVATE);
+		// If a user is present in shared preferences, start the unlock activity
+		if (user.getName() != null &&
+			user.getPassword() != null &&
+			user.getPin() != null &&
+			user.getName().length() > 0 &&
+			user.getPassword().length() > 0 &&
+			user.getPin().length() > 0)
+		{
+			startActivity(new Intent(this, UnlockActivity.class));
+			
+			finish();
+			
+			return;
+		}
+		
+		setContentView(R.layout.activity_login);
 		
 		userNameEditText = (EditText) findViewById(R.id.loginUserNameEditText);
 		passwordEditText = (EditText) findViewById(R.id.loginPasswordEditText);
@@ -66,48 +83,64 @@ public class LoginActivity extends Activity implements RESTRequestListener
 	}
 	
 	/**
-	 * Login
+	 * The click listener for the login button.
 	 */
-	public void login(String userName, String password, String pin)
+	protected OnClickListener loginButtonButtonOnClickListener = new OnClickListener()
 	{
-		// User name must not be empty
-		if (userName.length() <= 0)
+		@Override
+		public void onClick(View view)
 		{
-			AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+			String userName = userNameEditText.getText().toString();
+			String password = passwordEditText.getText().toString();
+			String pin      = loginPinEditText.getText().toString();
 			
-			builder.setMessage(R.string.login_empty_userName);
-			builder.setPositiveButton(R.string.ok, null);
-			builder.show();
+			// User name must not be empty
+			if (userName.length() <= 0)
+			{
+				AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+				
+				builder.setMessage(R.string.login_empty_userName);
+				builder.setPositiveButton(R.string.ok, null);
+				builder.show();
+				
+				return;
+			}
 			
-			return;
-		}
-		
-		// Password must not be empty
-		if (password.length() <= 0)
-		{
-			AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+			// Password must not be empty
+			if (password.length() <= 0)
+			{
+				AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
 
-			builder.setMessage(R.string.login_empty_password);
-			builder.setPositiveButton(R.string.ok, null);
-			builder.show();
+				builder.setMessage(R.string.login_empty_password);
+				builder.setPositiveButton(R.string.ok, null);
+				builder.show();
+				
+				return;
+			}
 			
-			return;
-		}
-		
-		// Pin code must be at least 5 digits
-		if (pin.length() < 5)
-		{
-			AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+			// Pin code must be at least 5 digits
+			if (pin.length() < 5)
+			{
+				AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
 
-			builder.setMessage(R.string.login_pin_too_short);
-			builder.setPositiveButton(R.string.ok, null);
-			builder.show();
+				builder.setMessage(R.string.login_pin_too_short);
+				builder.setPositiveButton(R.string.ok, null);
+				builder.show();
+				
+				return;
+			}
 			
-			return;
+			performLoginRequest(userName, password, pin);
 		}
-
+	};
+	
+	/**
+	 * Performs a RESTful request to the server
+	 */
+	protected void performLoginRequest(String userName, String password, String pin)
+	{
 		// Store these user credentials in the user class
-		lastLoginAttemptUser = new User(userName, password, (String) null, pin, 0);
+		user = new User(userName, password, (String) null, pin, 0);
 		
 		// Create new RESTRequest instance and fill it with user data
 		RESTRequest restRequest = new RESTRequest(getString(R.string.rest_request_base_url) + getString(R.string.rest_request_login), LOGIN_EVENT_ID);
@@ -120,19 +153,24 @@ public class LoginActivity extends Activity implements RESTRequestListener
 		// Send an asynchronous RESTful request
 		restRequest.execute();
 	}
-	
-	/**
-	 * Saves credentials of passed user
-	 */
-	protected void saveUserCredentials(User user)
+
+	@Override
+	public void RESTRequestOnPreExecute(RESTRequestEvent event)
 	{
-		SharedPreferences.Editor preferencesEditor = userCredentials.edit();
+		progressDialog = new ProgressDialog(this);
+		progressDialog.setTitle(getResources().getString(R.string.loading));
+		progressDialog.show();
+	}
+
+	@Override
+	public void RESTRequestOnPostExecute(RESTRequestEvent event)
+	{
+		progressDialog.dismiss();
 		
-		preferencesEditor.putString("userName", user.getName());
-		preferencesEditor.putString("password", user.getPassword());
-		preferencesEditor.putString("pin"     , user.getPin());
-		
-		preferencesEditor.apply();
+		if (event.getID().equals(LOGIN_EVENT_ID))
+		{
+			handleRESTRequestLoginEvent(event);
+		}
 	}
 	
 	/**
@@ -161,23 +199,29 @@ public class LoginActivity extends Activity implements RESTRequestListener
 				return;
 			}
 			
-			lastLoginAttemptUser.setSessionID(sessionID);
-			lastLoginAttemptUser.setType(userType);
+			user.setSessionID(sessionID);
+			user.setType(userType);
 		}
 		catch (JSONException e) { }
 		
 		// Correct login, start main activity
-		if (lastLoginAttemptUser.isLoggedIn())
+		if (user.isLoggedIn())
 		{
-			saveUserCredentials(lastLoginAttemptUser);
+			CurrentUser.setCurrentUser(user);
 			
-			Intent intent = new Intent(this, MainActivity.class);
-			
-			intent.putExtra("user", lastLoginAttemptUser);
-			
-			startActivity(intent);
+			startActivity(new Intent(this, MainActivity.class));
 			
 			finish();
+			
+//			saveUserCredentials(user);
+//			
+//			Intent intent = new Intent(this, MainActivity.class);
+//			
+//			intent.putExtra("user", user);
+//			
+//			startActivity(intent);
+//			
+//			finish();
 		}
 		else
 		{
@@ -198,37 +242,6 @@ public class LoginActivity extends Activity implements RESTRequestListener
 				builder.setPositiveButton(R.string.ok, null);			
 				builder.show();
 			}
-		}
-	}
-	
-	/**
-	 * The click listener for the login button.
-	 */
-	protected OnClickListener loginButtonButtonOnClickListener = new OnClickListener()
-	{
-		@Override
-		public void onClick(View view)
-		{
-			login(userNameEditText.getText().toString(), passwordEditText.getText().toString(), loginPinEditText.getText().toString());
-		}
-	};
-
-	@Override
-	public void RESTRequestOnPreExecute(RESTRequestEvent event)
-	{
-		progressDialog = new ProgressDialog(this);
-		progressDialog.setTitle(getResources().getString(R.string.loading));
-		progressDialog.show();
-	}
-
-	@Override
-	public void RESTRequestOnPostExecute(RESTRequestEvent event)
-	{
-		progressDialog.dismiss();
-		
-		if (event.getID().equals(LOGIN_EVENT_ID))
-		{
-			handleRESTRequestLoginEvent(event);
 		}
 	}
 }

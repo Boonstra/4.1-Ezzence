@@ -1,9 +1,5 @@
 package com.turbo_extreme_sloth.ezzence;
 
-import com.turbo_extreme_sloth.ezzence.activities.LoginActivity;
-
-import android.content.Context;
-import android.content.Intent;
 
 /**
  * Singleton class for storing and retrieving the current user

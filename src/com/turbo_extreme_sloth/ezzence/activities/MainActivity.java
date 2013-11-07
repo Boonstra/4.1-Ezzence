@@ -50,6 +50,8 @@ public class MainActivity extends Activity implements RESTRequestListener
 		{
 			startActivity(new Intent(this, LoginActivity.class));
 			
+			return;
+			
 			//CurrentUser.performLogin(this, savedInstanceState);
 		}
 		

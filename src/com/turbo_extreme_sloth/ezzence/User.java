@@ -21,7 +21,7 @@ public class User implements Parcelable
 			this.type = type;
 		}
 		
-		public int getType()
+		public int getValue()
 		{
 			return type;
 		}
@@ -34,6 +34,14 @@ public class User implements Parcelable
 	protected String sessionID;
 	protected String pin;
 	protected int    type;
+	
+	/**
+	 * Constructor for creating an empty user
+	 */
+	public User()
+	{
+		this("", "", "", "", Type.NORMAL_USER.getValue());
+	}
 	
 	/**
 	 * Constructor
@@ -136,7 +144,7 @@ public class User implements Parcelable
 	{
 		for (Type enumValue : Type.values())
 		{
-			if (enumValue.getType() == type)
+			if (enumValue.getValue() == type)
 			{
 				this.type = type;
 				
@@ -144,7 +152,7 @@ public class User implements Parcelable
 			}
 		}
 		
-		this.type = Type.NORMAL_USER.getType();
+		this.type = Type.NORMAL_USER.getValue();
 	}
 	
 	/**
