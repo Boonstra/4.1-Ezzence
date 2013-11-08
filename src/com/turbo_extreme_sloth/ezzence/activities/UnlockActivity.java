@@ -3,12 +3,10 @@ package com.turbo_extreme_sloth.ezzence.activities;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -22,7 +20,7 @@ import com.turbo_extreme_sloth.ezzence.User;
 import com.turbo_extreme_sloth.ezzence.rest.RESTRequestEvent;
 import com.turbo_extreme_sloth.ezzence.rest.RESTRequestListener;
 
-public class UnlockActivity extends Activity implements RESTRequestListener
+public class UnlockActivity extends BaseActivity implements RESTRequestListener
 {
 	/** The ID for recognizing a login event. */
 	protected static final String UNLOCK_EVENT_ID = "unlockEvent";
@@ -63,15 +61,6 @@ public class UnlockActivity extends Activity implements RESTRequestListener
 		unlockButton = (Button) findViewById(R.id.unlockButton);
 		
 		unlockButton.setOnClickListener(unlockButtonOnClickListener);
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu)
-	{
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.default_menu, menu);
-		
-		return true;
 	}
 	
 	/**

@@ -73,15 +73,6 @@ public class LoginActivity extends Activity implements RESTRequestListener
 		
 		loginButtonButton.setOnClickListener(loginButtonButtonOnClickListener);
 	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu)
-	{
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.default_menu, menu);
-		
-		return true;
-	}
 	
 	/**
 	 * The click listener for the login button.

@@ -1,12 +1,11 @@
 package com.turbo_extreme_sloth.ezzence.activities;
 
-import com.turbo_extreme_sloth.ezzence.R;
-
 import android.os.Bundle;
-import android.app.Activity;
 import android.view.Menu;
 
-public class ConsumptionOverviewActivity extends Activity
+import com.turbo_extreme_sloth.ezzence.R;
+
+public class ConsumptionOverviewActivity extends BaseActivity
 {
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
