@@ -1,10 +1,11 @@
 package com.turbo_extreme_sloth.ezzence;
 
 import android.os.Bundle;
-import android.app.Activity;
 import android.view.Menu;
 
-public class ChangePINActivity extends Activity
+import com.turbo_extreme_sloth.ezzence.activities.BaseActivity;
+
+public class ChangePINActivity extends BaseActivity
 {
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -14,10 +15,12 @@ public class ChangePINActivity extends Activity
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu)
+	public boolean onPrepareOptionsMenu(Menu menu)
 	{
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.change_pin, menu);
+		super.onPrepareOptionsMenu(menu);
+		
+		menu.findItem(R.id.action_change_pin).setVisible(false);
+		
 		return true;
 	}
 }
