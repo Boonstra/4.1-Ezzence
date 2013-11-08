@@ -13,20 +13,6 @@ import com.turbo_extreme_sloth.ezzence.R;
 public abstract class BaseActivity extends Activity
 {
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
-		
-		// Redirect a user to the login page when not logged in
-		if (!CurrentUser.isLoggedIn())
-		{
-			startActivity(new Intent(this, LoginActivity.class));
-	
-			finish();
-		}
-	}
-	
-	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
 		// Set base menu as options menu
@@ -46,6 +32,8 @@ public abstract class BaseActivity extends Activity
 				CurrentUser.unsetCurrentUser(this);
 
 				startActivity(new Intent(this, LoginActivity.class));
+				
+				finish();
 				
 				return true;
 
