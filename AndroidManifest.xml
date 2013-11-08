@@ -40,6 +40,10 @@
             android:label="@string/title_activity_consumption_overview" >
         </activity>
         <activity
+            android:name="com.turbo_extreme_sloth.ezzence.activities.SetTemperatureActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
             android:name="com.turbo_extreme_sloth.ezzence.ChangePINActivity"
             android:label="@string/title_activity_change_pin" >
         </activity>
