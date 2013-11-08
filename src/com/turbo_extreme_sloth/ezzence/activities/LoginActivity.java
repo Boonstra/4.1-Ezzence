@@ -19,6 +19,7 @@ import com.turbo_extreme_sloth.ezzence.CurrentUser;
 import com.turbo_extreme_sloth.ezzence.R;
 import com.turbo_extreme_sloth.ezzence.SharedPreferencesHelper;
 import com.turbo_extreme_sloth.ezzence.User;
+import com.turbo_extreme_sloth.ezzence.config.Config;
 import com.turbo_extreme_sloth.ezzence.rest.RESTRequest;
 import com.turbo_extreme_sloth.ezzence.rest.RESTRequestEvent;
 import com.turbo_extreme_sloth.ezzence.rest.RESTRequestListener;
@@ -77,7 +78,7 @@ public class LoginActivity extends Activity implements RESTRequestListener
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.login, menu);
+		getMenuInflater().inflate(R.menu.default_menu, menu);
 		
 		return true;
 	}
@@ -143,7 +144,7 @@ public class LoginActivity extends Activity implements RESTRequestListener
 		user = new User(userName, password, (String) null, pin, 0);
 		
 		// Create new RESTRequest instance and fill it with user data
-		RESTRequest restRequest = new RESTRequest(getString(R.string.rest_request_base_url) + getString(R.string.rest_request_login), LOGIN_EVENT_ID);
+		RESTRequest restRequest = new RESTRequest(Config.REST_REQUEST_BASE_URL + Config.REST_REQUEST_LOGIN, LOGIN_EVENT_ID);
 		
 		restRequest.putString("username", userName);
 		restRequest.putString("password", password);
@@ -167,7 +168,7 @@ public class LoginActivity extends Activity implements RESTRequestListener
 	{
 		progressDialog.dismiss();
 		
-		if (event.getID().equals(LOGIN_EVENT_ID))
+		if (LOGIN_EVENT_ID.equals(event.getID()))
 		{
 			handleRESTRequestLoginEvent(event);
 		}
@@ -207,21 +208,13 @@ public class LoginActivity extends Activity implements RESTRequestListener
 		// Correct login, start main activity
 		if (user.isLoggedIn())
 		{
+			SharedPreferencesHelper.storeUser(this, user);
+			
 			CurrentUser.setCurrentUser(user);
 			
 			startActivity(new Intent(this, MainActivity.class));
 			
 			finish();
-			
-//			saveUserCredentials(user);
-//			
-//			Intent intent = new Intent(this, MainActivity.class);
-//			
-//			intent.putExtra("user", user);
-//			
-//			startActivity(intent);
-//			
-//			finish();
 		}
 		else
 		{

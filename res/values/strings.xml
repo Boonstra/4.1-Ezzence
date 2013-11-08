@@ -6,6 +6,7 @@
     <string name="action_settings">Settings</string>
     <string name="ok">OK</string>
     <string name="loading">Loading, please wait</string>
+    <string name="error_unknown_exception">An unknown error occurred</string>
     
     <!-- Temperature -->
     <string name="main_current_temperare">Current Temperature:</string>
@@ -24,7 +25,7 @@
     <string name="login_empty_password">Please fill in a password</string>
     <string name="login_pin_too_short">The local pin number should consist of at least 5 digits</string>
     <string name="login_password_encryption_error">Password could not be send securely</string>
-    <string name="login_failed">Login failed!</string>
+    <string name="login_failed">Login failed</string>
     <string name="login_wrong_credentials">User name and password are incorrect</string>
     
     <!-- Session logout -->
@@ -34,17 +35,10 @@
     <!-- Session unlock -->
     <string name="unlock_pin_hint">Local PIN</string>
     <string name="unlock_button_text">Unlock</string>
-    <string name="unlock_failed">Unlock failed!</string>
+    <string name="unlock_failed">Unlock failed</string>
     <string name="unlock_wrong_pin">Local PIN is incorrect</string>
     
     <!-- REST -->
-    <string name="rest_request_base_url">http://rawr.eu/ezzence/api/</string>
-    <string name="rest_request_login">login.php</string>
-    <string name="rest_request_temperature">temperature.php</string>
-    <string name="rest_request_requestedTemperatures">requestedTemperatures.php</string>
-    <string name="rest_request_setTemperature">setTemperature.php</string>
-    <string name="rest_request_setTemperatureProfile">setTemperatureProfile.php</string>
-    <string name="rest_request_usageStats">usageStats.php</string>
     <string name="rest_not_found">Server connection could not be established</string>
     <string name="title_activity_unlock">UnlockActivity</string>
 

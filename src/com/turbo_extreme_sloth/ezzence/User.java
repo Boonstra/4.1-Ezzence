@@ -1,15 +1,13 @@
 package com.turbo_extreme_sloth.ezzence;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 /**
  * The User class assists in transferring a user's data.
  * 
  * As this class implements Parcelable it can be passed through intents and stored in SharedPreferences.
  */
-public class User implements Parcelable
+public class User //implements Parcelable
 {
+	/** Types of users. */
 	public enum Type
 	{
 		SUPER_USER (1), NORMAL_USER (2);
@@ -27,8 +25,7 @@ public class User implements Parcelable
 		}
 	};
 	
-	//protected SharedPreferences userCredentials;
-	
+	/** User information. */
 	protected String name;
 	protected String password;
 	protected String sessionID;
@@ -54,8 +51,6 @@ public class User implements Parcelable
 	 */
 	public User(String name, String password, String sessionID, String pin, int type)
 	{
-		System.out.println("USER: New user created, named: " + name + " - Password: " + password + " - SessionID: " + sessionID + " - Pin: " + pin + " - Type: " + type);
-		
 		this.name      = name;
 		this.password  = password;
 		this.sessionID = sessionID;
@@ -168,49 +163,49 @@ public class User implements Parcelable
 		return sessionID != null && sessionID.length() > 0;
 	}
 
-	@Override
-	public int describeContents()
-	{
-		return 0;
-	}
-
-	@Override
-	public void writeToParcel(Parcel parcel, int flags)
-	{
-		parcel.writeString(name);
-		parcel.writeString(password);
-		parcel.writeString(sessionID);
-		parcel.writeString(pin);
-		parcel.writeInt(type);
-	}
-	
-	/**
-	 * 
-	 */
-	public static final User.Creator<User> CREATOR = new User.Creator<User>()
-	{
-		@Override
-		public User createFromParcel(Parcel parcel)
-		{
-			return new User(parcel);
-		}
-
-		@Override
-		public User[] newArray(int size)
-		{
-			return new User[size];
-		}
-	};
-	
-	/**
-	 * @param source
-	 */
-	protected User(Parcel parcel)
-	{
-		name      = parcel.readString();
-		password  = parcel.readString();
-		sessionID = parcel.readString();
-		pin       = parcel.readString();
-		type      = parcel.readInt();
-	}
+//	@Override
+//	public int describeContents()
+//	{
+//		return 0;
+//	}
+//
+//	@Override
+//	public void writeToParcel(Parcel parcel, int flags)
+//	{
+//		parcel.writeString(name);
+//		parcel.writeString(password);
+//		parcel.writeString(sessionID);
+//		parcel.writeString(pin);
+//		parcel.writeInt(type);
+//	}
+//	
+//	/**
+//	 * 
+//	 */
+//	public static final User.Creator<User> CREATOR = new User.Creator<User>()
+//	{
+//		@Override
+//		public User createFromParcel(Parcel parcel)
+//		{
+//			return new User(parcel);
+//		}
+//
+//		@Override
+//		public User[] newArray(int size)
+//		{
+//			return new User[size];
+//		}
+//	};
+//	
+//	/**
+//	 * @param source
+//	 */
+//	protected User(Parcel parcel)
+//	{
+//		name      = parcel.readString();
+//		password  = parcel.readString();
+//		sessionID = parcel.readString();
+//		pin       = parcel.readString();
+//		type      = parcel.readInt();
+//	}
 }

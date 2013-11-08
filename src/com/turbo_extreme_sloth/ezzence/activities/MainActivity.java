@@ -1,5 +1,7 @@
 package com.turbo_extreme_sloth.ezzence.activities;
 
+import java.util.Date;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -10,6 +12,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
@@ -17,9 +20,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.turbo_extreme_sloth.ezzence.exceptions.UncaughtExceptionHandler;
 import com.turbo_extreme_sloth.ezzence.CurrentUser;
 import com.turbo_extreme_sloth.ezzence.R;
 import com.turbo_extreme_sloth.ezzence.User;
+import com.turbo_extreme_sloth.ezzence.config.Config;
 import com.turbo_extreme_sloth.ezzence.rest.RESTRequest;
 import com.turbo_extreme_sloth.ezzence.rest.RESTRequestEvent;
 import com.turbo_extreme_sloth.ezzence.rest.RESTRequestListener;
@@ -45,17 +50,24 @@ public class MainActivity extends Activity implements RESTRequestListener
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+
+		// Set the default exceptions handler
+		Thread.setDefaultUncaughtExceptionHandler(UncaughtExceptionHandler.getUncaughtExceptionHandler(this, getResources().getString(R.string.error_unknown_exception)));
 		
 		if (!CurrentUser.isLoggedIn())
 		{
 			startActivity(new Intent(this, LoginActivity.class));
+			
+			finish();
 			
 			return;
 			
 			//CurrentUser.performLogin(this, savedInstanceState);
 		}
 		
-		System.out.println("------------------------- lookhere");
+		setContentView(R.layout.activity_main);
+		
+//		System.out.println("------------------------- lookhere");
 		
 //		userCredentials = getSharedPreferences("userCredentials", MODE_PRIVATE);
 //		
@@ -89,9 +101,29 @@ public class MainActivity extends Activity implements RESTRequestListener
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+		getMenuInflater().inflate(R.menu.default_menu, menu);
 		
 		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+//	    switch (item.getItemId())
+//	    {
+//		    case R.id.action_logout:
+//		    	
+//		    	CurrentUser.logout();
+//		        
+//		    	startActivity(new Intent(this, LoginActivity.class));
+//		    	
+//		        return true;
+//		    	
+//		    default:
+//		        return super.onOptionsItemSelected(item);
+//	    }
+		
+		return false;
 	}
 	
 	@Override
@@ -102,16 +134,16 @@ public class MainActivity extends Activity implements RESTRequestListener
 		currentUser = savedInstanceState.getParcelable(CURRENT_USER_KEY);
 	}
 	
-	@Override
-	/**
-	 * Saves instance state
-	 */
-	protected void onSaveInstanceState(Bundle outState)
-	{	
-		super.onSaveInstanceState(outState);
-		
-		outState.putParcelable(CURRENT_USER_KEY, currentUser);
-	}
+//	@Override
+//	/**
+//	 * Saves instance state
+//	 */
+//	protected void onSaveInstanceState(Bundle outState)
+//	{	
+//		super.onSaveInstanceState(outState);
+//		
+//		outState.putParcelable(CURRENT_USER_KEY, currentUser);
+//	}
 	
 	/**
 	 * 
@@ -148,12 +180,11 @@ public class MainActivity extends Activity implements RESTRequestListener
 		}
 		
 		// Create new RESTRequest instance and fill it with user data
-		RESTRequest restRequest = new RESTRequest(getString(R.string.rest_request_base_url) + getString(R.string.rest_request_setTemperature), SET_TEMPERATURE_ID);
+		RESTRequest restRequest = new RESTRequest(Config.REST_REQUEST_BASE_URL + Config.REST_REQUEST_SET_TEMPERATURE, SET_TEMPERATURE_ID);
 		
 		restRequest.putString("sessionID"  , currentUser.getSessionID());
 		restRequest.putString("temperature", temperature);
 		
-		// Add event listener
 		restRequest.addEventListener(this);
 		
 		restRequest.execute();
@@ -165,55 +196,54 @@ public class MainActivity extends Activity implements RESTRequestListener
 	public void updateCurrentTemperature()
 	{
 		// Create new RESTRequest instance and fill it with user data
-		RESTRequest restRequest = new RESTRequest(getString(R.string.rest_request_base_url) + getString(R.string.rest_request_temperature), GET_CURRENT_TEMPERATURE_ID);
+		RESTRequest restRequest = new RESTRequest(Config.REST_REQUEST_BASE_URL + Config.REST_REQUEST_TEMPERATURE, GET_CURRENT_TEMPERATURE_ID);
 		
 		restRequest.putString("sessionID", currentUser.getSessionID());
 		
-		// Add event listener
 		restRequest.addEventListener(this);
 		
 		restRequest.execute();
 	}
 	
-	/**
-	 * @param event
-	 */
-	protected void handleRESTRequestUnlockEvent(RESTRequestEvent event)
-	{
-		String result = event.getResult();
-		
-		try
-		{
-			// Parse JSON
-			JSONObject jsonObject = new JSONObject(result);
-			
-			String message   = jsonObject.getString("message");
-			String sessionID = jsonObject.getString("sessionID");
-			
-			int userType = jsonObject.getInt("userType");
-			
-			// Message should be equal to success and sessionID should be available to be logged in successfully
-			if (message == null ||
-				!message.equals("success") ||
-				sessionID == null ||
-				sessionID.length() <= 0)
-			{
-				return;
-			}
-			
-			currentUser.setSessionID(sessionID);
-			currentUser.setType(userType);
-		}
-		catch (JSONException e) { }
-		
-		Intent intent = new Intent(this, UnlockActivity.class);
-		
-		intent.putExtra("user", currentUser);
-		
-		startActivity(intent);
-		
-		finish();
-	}
+//	/**
+//	 * @param event
+//	 */
+//	protected void handleRESTRequestUnlockEvent(RESTRequestEvent event)
+//	{
+//		String result = event.getResult();
+//		
+//		try
+//		{
+//			// Parse JSON
+//			JSONObject jsonObject = new JSONObject(result);
+//			
+//			String message   = jsonObject.getString("message");
+//			String sessionID = jsonObject.getString("sessionID");
+//			
+//			int userType = jsonObject.getInt("userType");
+//			
+//			// Message should be equal to success and sessionID should be available to be logged in successfully
+//			if (message == null ||
+//				!message.equals("success") ||
+//				sessionID == null ||
+//				sessionID.length() <= 0)
+//			{
+//				return;
+//			}
+//			
+//			currentUser.setSessionID(sessionID);
+//			currentUser.setType(userType);
+//		}
+//		catch (JSONException e) { }
+//		
+//		Intent intent = new Intent(this, UnlockActivity.class);
+//		
+//		intent.putExtra("user", currentUser);
+//		
+//		startActivity(intent);
+//		
+//		finish();
+//	}
 	
 	/**
 	 * @param event
@@ -288,11 +318,11 @@ public class MainActivity extends Activity implements RESTRequestListener
 	@Override
 	public void RESTRequestOnPostExecute(RESTRequestEvent event)
 	{
-		if (event.getID().equals(UNLOCK_EVENT_ID))
+		/*if (event.getID().equals(UNLOCK_EVENT_ID))
 		{
 			handleRESTRequestUnlockEvent(event);
 		}
-		else if (event.getID().equals(GET_CURRENT_TEMPERATURE_ID))
+		else */if (event.getID().equals(GET_CURRENT_TEMPERATURE_ID))
 		{
 			handleRESTRequestGetCurrentTemperature(event);
 		}
