@@ -41,17 +41,19 @@ public final class R {
         public static final int unlockPinEditText=0x7f08000a;
     }
     public static final class layout {
-        public static final int activity_consumption_overview=0x7f030000;
-        public static final int activity_login=0x7f030001;
-        public static final int activity_main=0x7f030002;
-        public static final int activity_unlock=0x7f030003;
+        public static final int activity_change_pin=0x7f030000;
+        public static final int activity_consumption_overview=0x7f030001;
+        public static final int activity_login=0x7f030002;
+        public static final int activity_main=0x7f030003;
+        public static final int activity_unlock=0x7f030004;
     }
     public static final class menu {
         public static final int base_menu=0x7f070000;
-        public static final int consumption_overview=0x7f070001;
-        public static final int login=0x7f070002;
-        public static final int main=0x7f070003;
-        public static final int unlock=0x7f070004;
+        public static final int change_pin=0x7f070001;
+        public static final int consumption_overview=0x7f070002;
+        public static final int login=0x7f070003;
+        public static final int main=0x7f070004;
+        public static final int unlock=0x7f070005;
     }
     public static final class string {
         public static final int action_settings=0x7f050001;
@@ -91,6 +93,7 @@ public final class R {
         /**  Session logout 
          */
         public static final int switch_user_button_text=0x7f050014;
+        public static final int title_activity_change_pin=0x7f050020;
         public static final int title_activity_consumption_overview=0x7f05001e;
         public static final int title_activity_unlock=0x7f05001c;
         public static final int unlock_button_text=0x7f050017;
