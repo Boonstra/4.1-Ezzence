@@ -6,8 +6,7 @@
     <string name="action_settings">Settings</string>
     <string name="ok">OK</string>
     <string name="loading">Loading, please wait</string>
-    <string name="error_unknown_exception">An unknown error occurred</string>
-    
+
     <!-- Temperature -->
     <string name="main_current_temperare">Current Temperature:</string>
     <string name="main_set_temperare_hint">Set Temperature</string>
@@ -27,7 +26,7 @@
     <string name="login_password_encryption_error">Password could not be send securely</string>
     <string name="login_failed">Login failed</string>
     <string name="login_wrong_credentials">User name and password are incorrect</string>
-    
+
     <!-- Session logout -->
     <string name="switch_user_button_text">Log out</string>
     <string name="logout_button_text">Log out</string>
@@ -37,9 +36,15 @@
     <string name="unlock_button_text">Unlock</string>
     <string name="unlock_failed">Unlock failed</string>
     <string name="unlock_wrong_pin">Local PIN is incorrect</string>
-    
+    <string name="unlock_change_pin_button_text">Change local PIN</string>
+
     <!-- REST -->
     <string name="rest_not_found">Server connection could not be established</string>
     <string name="title_activity_unlock">UnlockActivity</string>
+
+    <!-- Exceptions -->
+    <string name="error_unknown_exception">An unknown error occurred</string>
+    <string name="title_activity_consumption_overview">ConsumptionOverviewActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

@@ -35,17 +35,17 @@ public class MainActivity extends Activity implements RESTRequestListener
 	protected static final String UNLOCK_EVENT_ID            = "unlockEvent";
 	protected static final String GET_CURRENT_TEMPERATURE_ID = "getCurrentTemperature";
 	protected static final String SET_TEMPERATURE_ID         = "setTemperature";
-	
+
 	protected SharedPreferences userCredentials;
-	
+
 	protected User currentUser;
-	
+
 	protected TextView currentTemperatureTextView;
-	
+
 	protected EditText setTemperatureEditText;
-	
+
 	protected Button setTemperatureButton;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -53,48 +53,48 @@ public class MainActivity extends Activity implements RESTRequestListener
 
 		// Set the default exceptions handler
 		Thread.setDefaultUncaughtExceptionHandler(UncaughtExceptionHandler.getUncaughtExceptionHandler(this, getResources().getString(R.string.error_unknown_exception)));
-		
+
 		if (!CurrentUser.isLoggedIn())
 		{
 			startActivity(new Intent(this, LoginActivity.class));
-			
+
 			finish();
-			
+
 			return;
-			
+
 			//CurrentUser.performLogin(this, savedInstanceState);
 		}
-		
+
 		setContentView(R.layout.activity_main);
-		
-//		System.out.println("------------------------- lookhere");
-		
-//		userCredentials = getSharedPreferences("userCredentials", MODE_PRIVATE);
-//		
-//		// When the intent contains a parceled user instance, the user just logged in
-//		Intent intent = getIntent();
-//		
-//		currentUser = intent.getParcelableExtra("user");
-//		
-//		// Login user
-//		if (!(currentUser instanceof User))
-//		{
-//			login(savedInstanceState);
-//			
-//			return;
-//		}
-//		
-//		setContentView(R.layout.activity_main);
-//		
-//		currentTemperatureTextView = (TextView) findViewById(R.id.currentTemperatureTextView);
-//		
-//		setTemperatureEditText = (EditText) findViewById(R.id.setTemperatureEditText);
-//		
-//		setTemperatureButton = (Button) findViewById(R.id.setTemperatureButton);
-//		
-//		setTemperatureButton.setOnClickListener(setTemperatureButtonOnClickListener);
-//		
-//		updateCurrentTemperature();
+
+		//		System.out.println("------------------------- lookhere");
+
+		//		userCredentials = getSharedPreferences("userCredentials", MODE_PRIVATE);
+		//		
+		//		// When the intent contains a parceled user instance, the user just logged in
+		//		Intent intent = getIntent();
+		//		
+		//		currentUser = intent.getParcelableExtra("user");
+		//		
+		//		// Login user
+		//		if (!(currentUser instanceof User))
+		//		{
+		//			login(savedInstanceState);
+		//			
+		//			return;
+		//		}
+		//		
+		//		setContentView(R.layout.activity_main);
+		//		
+		//		currentTemperatureTextView = (TextView) findViewById(R.id.currentTemperatureTextView);
+		//		
+		//		setTemperatureEditText = (EditText) findViewById(R.id.setTemperatureEditText);
+		//		
+		//		setTemperatureButton = (Button) findViewById(R.id.setTemperatureButton);
+		//		
+		//		setTemperatureButton.setOnClickListener(setTemperatureButtonOnClickListener);
+		//		
+		//		updateCurrentTemperature();
 	}
 
 	@Override
@@ -102,49 +102,41 @@ public class MainActivity extends Activity implements RESTRequestListener
 	{
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.default_menu, menu);
-		
+
 		return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
-//	    switch (item.getItemId())
-//	    {
-//		    case R.id.action_logout:
-//		    	
-//		    	CurrentUser.logout();
-//		        
-//		    	startActivity(new Intent(this, LoginActivity.class));
-//		    	
-//		        return true;
-//		    	
-//		    default:
-//		        return super.onOptionsItemSelected(item);
-//	    }
-		
-		return false;
+		switch (item.getItemId())
+		{
+			case R.id.action_logout:
+
+				CurrentUser.unsetCurrentUser(this);
+
+				startActivity(new Intent(this, LoginActivity.class));
+
+				return true;
+
+			//case R.id.action_change_pin:
+				
+				
+
+			default:
+
+				return super.onOptionsItemSelected(item);
+		}
 	}
-	
+
 	@Override
 	public void onRestoreInstanceState(Bundle savedInstanceState)
 	{
 		super.onRestoreInstanceState(savedInstanceState);
-		
+
 		currentUser = savedInstanceState.getParcelable(CURRENT_USER_KEY);
 	}
-	
-//	@Override
-//	/**
-//	 * Saves instance state
-//	 */
-//	protected void onSaveInstanceState(Bundle outState)
-//	{	
-//		super.onSaveInstanceState(outState);
-//		
-//		outState.putParcelable(CURRENT_USER_KEY, currentUser);
-//	}
-	
+
 	/**
 	 * 
 	 */
@@ -154,14 +146,14 @@ public class MainActivity extends Activity implements RESTRequestListener
 		public void onClick(View view)
 		{
 			setTemperature(setTemperatureEditText.getText().toString());
-			
+
 			// Force the keyboard to close
 			InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 
 			inputMethodManager.hideSoftInputFromWindow(setTemperatureEditText.getWindowToken(), 0);
 		}
 	};
-	
+
 	/**
 	 * Send a RESTful request to the API to change the temperature according to the passed temperature
 	 */
@@ -175,21 +167,21 @@ public class MainActivity extends Activity implements RESTRequestListener
 			builder.setMessage(R.string.main_empty_temperature);
 			builder.setPositiveButton(R.string.ok, null);
 			builder.show();
-			
+
 			return;
 		}
-		
+
 		// Create new RESTRequest instance and fill it with user data
 		RESTRequest restRequest = new RESTRequest(Config.REST_REQUEST_BASE_URL + Config.REST_REQUEST_SET_TEMPERATURE, SET_TEMPERATURE_ID);
-		
+
 		restRequest.putString("sessionID"  , currentUser.getSessionID());
 		restRequest.putString("temperature", temperature);
-		
+
 		restRequest.addEventListener(this);
-		
+
 		restRequest.execute();
 	}
-	
+
 	/**
 	 * Gets the current temperature from the RESTful API and updates the current temperature view
 	 */
@@ -197,69 +189,29 @@ public class MainActivity extends Activity implements RESTRequestListener
 	{
 		// Create new RESTRequest instance and fill it with user data
 		RESTRequest restRequest = new RESTRequest(Config.REST_REQUEST_BASE_URL + Config.REST_REQUEST_TEMPERATURE, GET_CURRENT_TEMPERATURE_ID);
-		
+
 		restRequest.putString("sessionID", currentUser.getSessionID());
-		
+
 		restRequest.addEventListener(this);
-		
+
 		restRequest.execute();
 	}
-	
-//	/**
-//	 * @param event
-//	 */
-//	protected void handleRESTRequestUnlockEvent(RESTRequestEvent event)
-//	{
-//		String result = event.getResult();
-//		
-//		try
-//		{
-//			// Parse JSON
-//			JSONObject jsonObject = new JSONObject(result);
-//			
-//			String message   = jsonObject.getString("message");
-//			String sessionID = jsonObject.getString("sessionID");
-//			
-//			int userType = jsonObject.getInt("userType");
-//			
-//			// Message should be equal to success and sessionID should be available to be logged in successfully
-//			if (message == null ||
-//				!message.equals("success") ||
-//				sessionID == null ||
-//				sessionID.length() <= 0)
-//			{
-//				return;
-//			}
-//			
-//			currentUser.setSessionID(sessionID);
-//			currentUser.setType(userType);
-//		}
-//		catch (JSONException e) { }
-//		
-//		Intent intent = new Intent(this, UnlockActivity.class);
-//		
-//		intent.putExtra("user", currentUser);
-//		
-//		startActivity(intent);
-//		
-//		finish();
-//	}
-	
+
 	/**
 	 * @param event
 	 */
 	protected void handleRESTRequestGetCurrentTemperature(RESTRequestEvent event)
 	{
 		String result = event.getResult();
-		
+
 		try
 		{
 			// Parse JSON
 			JSONObject jsonObject = new JSONObject(result);
-			
+
 			String message     = jsonObject.getString("message");
 			String temperature = jsonObject.getString("temperature");
-			
+
 			// Message should be equal to success and temperature should be set
 			if (message == null ||
 				!message.equals("success") ||
@@ -268,27 +220,27 @@ public class MainActivity extends Activity implements RESTRequestListener
 			{
 				return;
 			}
-			
+
 			// \u2103 stands for degrees Celcius. This unit is hard coded, it would've been nicer to have this as a setting.
 			currentTemperatureTextView.setText(temperature + "\u2103");
 		}
 		catch (JSONException e) { }
 	}
-	
+
 	/**
 	 * @param event
 	 */
 	protected void handleRESTRequestSetTemperature(RESTRequestEvent event)
 	{
 		String result = event.getResult();
-		
+
 		try
 		{
 			// Parse JSON
 			JSONObject jsonObject = new JSONObject(result);
-			
+
 			String message     = jsonObject.getString("message");
-			
+
 			// Check if temperature was changed succesfully
 			if (message == null ||
 				!message.equals("success"))
@@ -299,14 +251,14 @@ public class MainActivity extends Activity implements RESTRequestListener
 				builder.setPositiveButton(R.string.ok, null);
 				builder.show();
 			}
-			
+
 			// Success message
 			AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 
 			builder.setMessage(R.string.main_temperature_set);
 			builder.setPositiveButton(R.string.ok, null);
 			builder.show();
-			
+
 			updateCurrentTemperature();
 		}
 		catch (JSONException e) { }

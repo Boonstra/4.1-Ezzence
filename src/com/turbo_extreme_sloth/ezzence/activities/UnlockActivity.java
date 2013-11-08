@@ -19,8 +19,6 @@ import com.turbo_extreme_sloth.ezzence.CurrentUser;
 import com.turbo_extreme_sloth.ezzence.R;
 import com.turbo_extreme_sloth.ezzence.SharedPreferencesHelper;
 import com.turbo_extreme_sloth.ezzence.User;
-import com.turbo_extreme_sloth.ezzence.config.Config;
-import com.turbo_extreme_sloth.ezzence.rest.RESTRequest;
 import com.turbo_extreme_sloth.ezzence.rest.RESTRequestEvent;
 import com.turbo_extreme_sloth.ezzence.rest.RESTRequestListener;
 
