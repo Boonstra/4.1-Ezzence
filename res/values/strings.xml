@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
+
     <!-- General -->
     <string name="app_name">Ezzence</string>
     <string name="action_settings">Settings</string>
@@ -9,7 +9,7 @@
 
     <!-- Main menu -->
     <string name="set_temperature">Set temperature</string>
-    
+
     <!-- Temperature -->
     <string name="main_current_temperare">Current Temperature:</string>
     <string name="main_set_temperare_hint">Set Temperature</string>
@@ -50,4 +50,6 @@
     <string name="title_activity_consumption_overview">ConsumptionOverviewActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_change_pin">ChangePINActivity</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
 </resources>
