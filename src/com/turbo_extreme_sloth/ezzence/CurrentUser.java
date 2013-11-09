@@ -11,9 +11,9 @@ public class CurrentUser
 	protected static User currentUser;
 	
 	/**
-	 * Returns the current user when set, or null when no current user is set.
+	 * Returns the current user when set, or a new user when no current user is set.
 	 * 
-	 * @return currentUser | null
+	 * @return currentUser | new User
 	 */
 	public static User getCurrentUser()
 	{
@@ -22,7 +22,7 @@ public class CurrentUser
 			return currentUser;
 		}
 		
-		return null;
+		return new User();
 	}
 	
 	/**

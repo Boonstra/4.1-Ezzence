@@ -9,6 +9,7 @@
 
     <!-- Main menu -->
     <string name="set_temperature">Set temperature</string>
+    <string name="consumption_overview">Consumption overview</string>
 
     <!-- Temperature -->
     <string name="main_current_temperare">Current Temperature:</string>

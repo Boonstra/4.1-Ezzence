@@ -12,6 +12,8 @@ import android.widget.ListView;
 
 import com.turbo_extreme_sloth.ezzence.CurrentUser;
 import com.turbo_extreme_sloth.ezzence.R;
+import com.turbo_extreme_sloth.ezzence.SharedPreferencesHelper;
+import com.turbo_extreme_sloth.ezzence.config.Config;
 import com.turbo_extreme_sloth.ezzence.core.ListOption;
 import com.turbo_extreme_sloth.ezzence.exceptions.UncaughtExceptionHandler;
 
@@ -34,13 +36,19 @@ public class MainActivity extends BaseActivity implements OnItemClickListener
 		Thread.setDefaultUncaughtExceptionHandler(UncaughtExceptionHandler.getUncaughtExceptionHandler(this, getResources().getString(R.string.error_unknown_exception)));
 		
 		// Redirect a user to the login page when not logged in
-		if (!CurrentUser.isLoggedIn())
+		if (!CurrentUser.isLoggedIn() &&
+			!Config.DEBUG)
 		{
 			startActivity(new Intent(this, LoginActivity.class));
 	
 			finish();
 		
 			return;
+		}
+		else
+		{
+			// Bypass login in DEBUG mode by setting user
+			CurrentUser.setCurrentUser(SharedPreferencesHelper.getUser(this));
 		}
 		
 		setContentView(R.layout.activity_main);
@@ -62,8 +70,11 @@ public class MainActivity extends BaseActivity implements OnItemClickListener
 	{
 		ListOption[] options = null;
 		
-		options = new ListOption[]{ new ListOption(getString(R.string.set_temperature), SetTemperatureActivity.class)
-								  };
+		options = new ListOption[]
+		{
+			new ListOption(getString(R.string.set_temperature), SetTemperatureActivity.class),
+			new ListOption(getString(R.string.consumption_overview), ConsumptionOverviewActivity.class)
+		};
 		
 		return options;
 	}

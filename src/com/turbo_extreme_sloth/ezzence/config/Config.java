@@ -12,5 +12,5 @@ public class Config
 	public static final String REST_REQUEST_USAGE_STATS             = "usageStats.php";
 	
 	/** Debug mode */
-	public static final boolean DEBUG = true;
+	public static boolean DEBUG = true;
 }
