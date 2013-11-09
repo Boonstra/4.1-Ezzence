@@ -24,12 +24,6 @@ public abstract class BaseActivity extends Activity
 	{
 		switch (item.getItemId())
 		{
-			case R.id.action_settings:
-				
-				startActivity(new Intent(this, SettingsActivity.class));
-				
-				return true;
-			
 			case R.id.action_logout:
 
 				// Unset user to be able to login again
@@ -38,6 +32,12 @@ public abstract class BaseActivity extends Activity
 				startActivity(new Intent(this, LoginActivity.class));
 				
 				finish();
+				
+				return true;
+				
+			case R.id.action_settings:
+				
+				startActivity(new Intent(this, SettingsActivity.class));
 				
 				return true;
 

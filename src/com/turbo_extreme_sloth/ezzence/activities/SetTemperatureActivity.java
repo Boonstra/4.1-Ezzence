@@ -29,7 +29,7 @@ import com.turbo_extreme_sloth.ezzence.rest.RESTRequest;
 import com.turbo_extreme_sloth.ezzence.rest.RESTRequestEvent;
 import com.turbo_extreme_sloth.ezzence.rest.RESTRequestListener;
 
-public class SetTemperatureActivity extends Activity implements RESTRequestListener {
+public class SetTemperatureActivity extends BaseActivity implements RESTRequestListener {
 	protected static final String CURRENT_USER_KEY           = "CURRENT_USER";
 	protected static final String UNLOCK_EVENT_ID            = "unlockEvent";
 	protected static final String GET_CURRENT_TEMPERATURE_ID = "getCurrentTemperature";
