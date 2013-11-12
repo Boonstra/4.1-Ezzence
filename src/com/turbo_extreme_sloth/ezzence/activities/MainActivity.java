@@ -1,7 +1,13 @@
 package com.turbo_extreme_sloth.ezzence.activities;
 
+import java.util.Locale;
+
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,13 +37,18 @@ public class MainActivity extends BaseActivity implements OnItemClickListener
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		Resources res = this.getResources();
+	    android.content.res.Configuration conf = res.getConfiguration();
 
+	    if(!conf.locale.toString().equals("en") && !conf.locale.toString().equals("nl")){
+	    	conf.locale = new Locale("en");
+	    }
 		// Set the default exceptions handler
 		Thread.setDefaultUncaughtExceptionHandler(UncaughtExceptionHandler.getUncaughtExceptionHandler(this, getResources().getString(R.string.error_unknown_exception)));
 		
 		// Redirect a user to the login page when not logged in
-		if (!CurrentUser.isLoggedIn() &&
-			!Config.DEBUG)
+		if (!CurrentUser.isLoggedIn()
+			)
 		{
 			startActivity(new Intent(this, LoginActivity.class));
 	
@@ -48,7 +59,7 @@ public class MainActivity extends BaseActivity implements OnItemClickListener
 		else
 		{
 			// Bypass login in DEBUG mode by setting user
-			CurrentUser.setCurrentUser(SharedPreferencesHelper.getUser(this));
+			//CurrentUser.setCurrentUser(SharedPreferencesHelper.getUser(this));
 		}
 		
 		setContentView(R.layout.activity_main);
@@ -73,7 +84,8 @@ public class MainActivity extends BaseActivity implements OnItemClickListener
 		options = new ListOption[]
 		{
 			new ListOption(getString(R.string.set_temperature), SetTemperatureActivity.class),
-			new ListOption(getString(R.string.consumption_overview), ConsumptionOverviewActivity.class)
+			new ListOption(getString(R.string.consumption_overview), ConsumptionOverviewActivity.class),
+			new ListOption(getString(R.string.language), SetTemperatureActivity.class)
 		};
 		
 		return options;
@@ -93,8 +105,34 @@ public class MainActivity extends BaseActivity implements OnItemClickListener
 	{
 		ListOption lo = (ListOption)listView.getItemAtPosition(position);
 	    Log.e("<tag>", lo.toString());
+	    if(lo.toString().equals(getString(R.string.language))){
+			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+		    Resources res = view.getResources();
+		    // Change locale settings in the app.
+		    DisplayMetrics dm = res.getDisplayMetrics();
+		    android.content.res.Configuration conf = res.getConfiguration();
+		    String selectedLanguage = "en";
+		    Log.e("<message>", conf.locale.toString());
+		    if(conf.locale.toString().equals("en")){
+		    	selectedLanguage = prefs.getString("language", "nl");
+		    }
+		    else{
+		    	selectedLanguage = prefs.getString("language", "en");
+		    }
+		    conf.locale = new Locale(selectedLanguage);
+		    res.updateConfiguration(conf, dm);
+		    
+		    
+		    Intent intent = getIntent();
+		    finish();
+		    startActivity(intent);
+	    }
 		//start the activity that is paired with the clicked option
-		Intent intent = new Intent(this, lo.getValue());
-		this.startActivity(intent);
+	    else{
+			Intent intent = new Intent(this, lo.getValue());
+			this.startActivity(intent);
+	    }
 	}
+	
 }

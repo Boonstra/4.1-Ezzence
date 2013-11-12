@@ -10,6 +10,7 @@
     <!-- Main menu -->
     <string name="set_temperature">Temperatuur instellen</string>
     <string name="consumption_overview">Verbruik overzicht</string>
+    <string name="language">English</string>
 
     <!-- Temperature -->
     <string name="main_current_temperare">Huidige temperatuur:</string>
