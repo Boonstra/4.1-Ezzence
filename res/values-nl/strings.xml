@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- General -->
+    <string name="app_name">Ezzence</string>
+    <string name="action_settings">Instellingen</string>
+    <string name="ok">OK</string>
+    <string name="loading">Laden...</string>
+
+    <!-- Main menu -->
+    <string name="set_temperature">Temperatuur instellen</string>
+    <string name="consumption_overview">Verbruik overzicht</string>
+
+    <!-- Temperature -->
+    <string name="main_current_temperare">Huidige temperatuur:</string>
+    <string name="main_set_temperare_hint">Stel temperatuur in</string>
+    <string name="main_set_temperare">Opslaan</string>
+    <string name="main_empty_temperature">Vul a.u.b. een temperatuur in</string>
+    <string name="main_temperature_not_set">Er is een fout opgetreden bij het instellen van de temperatuur</string>
+    <string name="main_temperature_set">Temperatuur ingesteld</string>
+
+    <!-- Session login -->
+    <string name="login_userName_hint">Gebruikersnaam</string>
+    <string name="login_password_hint">Wachtwoord</string>
+    <string name="login_pin_hint">Nieuw lokale PIN</string>
+    <string name="login_button_text">Inloggen</string>
+    <string name="login_empty_userName">Vul een gebruikersnaam in</string>
+    <string name="login_empty_password">Vul een wachtwoord in</string>
+    <string name="login_pin_too_short">De PIN code moet uit minstens 5 tekens bestaan</string>
+    <string name="login_password_encryption_error">Wachtwoord kon niet veilig verstuurd worden</string>
+    <string name="login_failed">Login foutmelding</string>
+    <string name="login_wrong_credentials">Gebruikersnaam en wachtwoord combinatie incorrect</string>
+
+    <!-- Session logout -->
+    <string name="switch_user_button_text">Uitloggen</string>
+    <string name="logout_button_text">Uitloggen</string>
+
+    <!-- Session unlock -->
+    <string name="unlock_pin_hint">Lokale PIN</string>
+    <string name="unlock_button_text">Open</string>
+    <string name="unlock_failed">Openen mislukt</string>
+    <string name="unlock_wrong_pin">Lokale PIN is incorrect</string>
+    <string name="unlock_change_pin_button_text">Verander lokale PIN</string>
+
+    <!-- REST -->
+    <string name="rest_not_found">Server connectie kon niet gemaakt worden</string>
+    <string name="title_activity_unlock">OpenActivity</string>
+
+    <!-- Exceptions -->
+    <string name="error_unknown_exception">Een onbekende foutmelding is opgetreden</string>
+    <string name="title_activity_consumption_overview">VerbruikOverzichtActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_change_pin">VeranderPINActivity</string>
+    <string name="title_activity_settings">InstellingenActivity</string>
+
+</resources>
