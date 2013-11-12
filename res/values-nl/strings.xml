@@ -5,7 +5,8 @@
     <string name="app_name">Ezzence</string>
     <string name="action_settings">Instellingen</string>
     <string name="ok">OK</string>
-    <string name="loading">Laden...</string>
+    <string name="loading">Laden, een momentje graag</string>
+    <string name="unknown">Onbekend</string>
     
     <!-- Activity titles -->
     <string name="title_activity_change_pin">Verander PIN</string>
@@ -15,7 +16,7 @@
     
     <!-- Week days -->
     <string name="monday">Maandag</string>
-    <string name="tuesday">Disndag</string>
+    <string name="tuesday">Dinsdag</string>
     <string name="wednesday">Woensdag</string>
     <string name="thursday">Donderdag</string>
     <string name="friday">Vrijdag</string>
@@ -33,7 +34,7 @@
 
     <!-- Main menu -->
     <string name="set_temperature">Temperatuur</string>
-    <string name="consumption_overview">Verbruik overzicht</string>
+    <string name="consumption_overview">Verbruiksoverzicht</string>
     <string name="language">English</string>
 
     <!-- Temperature -->
