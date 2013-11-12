@@ -47,19 +47,13 @@ public class MainActivity extends BaseActivity implements OnItemClickListener
 		Thread.setDefaultUncaughtExceptionHandler(UncaughtExceptionHandler.getUncaughtExceptionHandler(this, getResources().getString(R.string.error_unknown_exception)));
 		
 		// Redirect a user to the login page when not logged in
-		if (!CurrentUser.isLoggedIn()
-			)
+		if (!CurrentUser.isLoggedIn())
 		{
 			startActivity(new Intent(this, LoginActivity.class));
 	
 			finish();
 		
 			return;
-		}
-		else
-		{
-			// Bypass login in DEBUG mode by setting user
-			//CurrentUser.setCurrentUser(SharedPreferencesHelper.getUser(this));
 		}
 		
 		setContentView(R.layout.activity_main);
