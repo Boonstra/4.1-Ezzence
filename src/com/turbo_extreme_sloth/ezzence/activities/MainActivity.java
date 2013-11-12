@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -18,20 +17,12 @@ import android.widget.ListView;
 
 import com.turbo_extreme_sloth.ezzence.CurrentUser;
 import com.turbo_extreme_sloth.ezzence.R;
-import com.turbo_extreme_sloth.ezzence.SharedPreferencesHelper;
-import com.turbo_extreme_sloth.ezzence.config.Config;
 import com.turbo_extreme_sloth.ezzence.core.ListOption;
 import com.turbo_extreme_sloth.ezzence.exceptions.UncaughtExceptionHandler;
 
 public class MainActivity extends BaseActivity implements OnItemClickListener
 {
 	private ListView listView;
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
-	{
-		return false;
-	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
