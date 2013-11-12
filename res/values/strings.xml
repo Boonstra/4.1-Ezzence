@@ -8,7 +8,7 @@
     <string name="loading">Loading, please wait</string>
 
     <!-- Main menu -->
-    <string name="set_temperature">Set temperature</string>
+    <string name="set_temperature">Temperature</string>
     <string name="consumption_overview">Consumption overview</string>
     <string name="language">Nederlands</string>
 

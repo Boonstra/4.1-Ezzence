@@ -8,7 +8,7 @@
     <string name="loading">Laden...</string>
 
     <!-- Main menu -->
-    <string name="set_temperature">Temperatuur instellen</string>
+    <string name="set_temperature">Temperatuur</string>
     <string name="consumption_overview">Verbruik overzicht</string>
     <string name="language">English</string>
 

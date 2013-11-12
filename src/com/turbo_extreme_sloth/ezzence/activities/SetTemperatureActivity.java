@@ -64,20 +64,20 @@ public class SetTemperatureActivity extends BaseActivity implements RESTRequestL
 		}
 		Log.e("<message>", CurrentUser.getCurrentUser().getType()+"");
 		setContentView(R.layout.activity_set_temperature);
-		
 	
 		currentTemperatureTextView = (TextView) findViewById(R.id.currentTemperatureTextView);	
 		setTemperatureEditText = (EditText) findViewById(R.id.setTemperatureEditText);	
 		setTemperatureButton = (Button) findViewById(R.id.setTemperatureButton);
 		setTemperatureButton.setOnClickListener(setTemperatureButtonOnClickListener);
 		if(CurrentUser.getCurrentUser().getType() == User.Type.SUPER_USER.getValue()){
-			setTemperatureButton.setVisibility(View.VISIBLE);			
+			setTemperatureButton.setVisibility(View.VISIBLE);
+			findViewById(R.id.setTemperatureEditText).setVisibility(View.VISIBLE);
 		}
 		else if(CurrentUser.getCurrentUser().getType() == User.Type.NORMAL_USER.getValue()){
 			setTemperatureButton.setVisibility(View.GONE);
+			findViewById(R.id.setTemperatureEditText).setVisibility(View.GONE);
 		}
-
-		//updateCurrentTemperature();
+		updateCurrentTemperature();
 	}
 	
 	@Override
