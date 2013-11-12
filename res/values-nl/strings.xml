@@ -6,6 +6,30 @@
     <string name="action_settings">Instellingen</string>
     <string name="ok">OK</string>
     <string name="loading">Laden...</string>
+    
+    <!-- Activity titles -->
+    <string name="title_activity_change_pin">Verander PIN</string>
+    <string name="title_activity_consumption_overview">Verbruiksoverzicht</string>
+    <string name="title_activity_settings">Instellingen</string>
+    <string name="title_activity_unlock">Ontgrendelen</string>
+    
+    <!-- Week days -->
+    <string name="monday">Maandag</string>
+    <string name="tuesday">Disndag</string>
+    <string name="wednesday">Woensdag</string>
+    <string name="thursday">Donderdag</string>
+    <string name="friday">Vrijdag</string>
+    <string name="saturday">Zaterdag</string>
+    <string name="sunday">Zondag</string>
+    
+    <!-- Resources -->
+    <string name="gas">Gas</string>
+    <string name="water">Water</string>
+    <string name="electricity">Elektrischiteit</string>
+    
+    <!-- Averages -->
+    <string name="weekly_averages">Wekelijkse Gemiddelden</string>
+    <string name="monthly_averages">Maandelijkse Gemiddelden</string>
 
     <!-- Main menu -->
     <string name="set_temperature">Temperatuur</string>
@@ -23,7 +47,7 @@
     <!-- Session login -->
     <string name="login_userName_hint">Gebruikersnaam</string>
     <string name="login_password_hint">Wachtwoord</string>
-    <string name="login_pin_hint">Nieuw lokale PIN</string>
+    <string name="login_pin_hint">Nieuwe PIN</string>
     <string name="login_button_text">Inloggen</string>
     <string name="login_empty_userName">Vul een gebruikersnaam in</string>
     <string name="login_empty_password">Vul een wachtwoord in</string>
@@ -45,13 +69,9 @@
 
     <!-- REST -->
     <string name="rest_not_found">Server connectie kon niet gemaakt worden</string>
-    <string name="title_activity_unlock">OpenActivity</string>
 
     <!-- Exceptions -->
     <string name="error_unknown_exception">Een onbekende foutmelding is opgetreden</string>
-    <string name="title_activity_consumption_overview">VerbruikOverzichtActivity</string>
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_change_pin">VeranderPINActivity</string>
-    <string name="title_activity_settings">InstellingenActivity</string>
 
 </resources>

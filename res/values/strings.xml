@@ -6,6 +6,30 @@
     <string name="action_settings">Settings</string>
     <string name="ok">OK</string>
     <string name="loading">Loading, please wait</string>
+    
+    <!-- Activity titles -->
+    <string name="title_activity_change_pin">Change PIN</string>
+    <string name="title_activity_consumption_overview">Consumption Overview</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_unlock">Unlock</string>
+    
+    <!-- Week days -->
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
+    
+    <!-- Resources -->
+    <string name="gas">Gas</string>
+    <string name="water">Water</string>
+    <string name="electricity">Electricity</string>
+    
+    <!-- Averages -->
+    <string name="weekly_averages">Weekly Averages</string>
+    <string name="monthly_averages">Monthly Averages</string>
 
     <!-- Main menu -->
     <string name="set_temperature">Temperature</string>
@@ -45,13 +69,8 @@
 
     <!-- REST -->
     <string name="rest_not_found">Server connection could not be established</string>
-    <string name="title_activity_unlock">UnlockActivity</string>
 
     <!-- Exceptions -->
     <string name="error_unknown_exception">An unknown error occurred</string>
-    <string name="title_activity_consumption_overview">ConsumptionOverviewActivity</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="title_activity_change_pin">ChangePINActivity</string>
-    <string name="title_activity_settings">SettingsActivity</string>
 
 </resources>
