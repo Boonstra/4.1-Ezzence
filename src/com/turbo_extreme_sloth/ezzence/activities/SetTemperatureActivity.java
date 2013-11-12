@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,8 +38,6 @@ public class SetTemperatureActivity extends BaseActivity implements RESTRequestL
 	
 	protected SharedPreferences userCredentials;
 	
-	protected User currentUser;
-	
 	protected TextView currentTemperatureTextView;
 	
 	protected EditText setTemperatureEditText;
@@ -63,56 +62,27 @@ public class SetTemperatureActivity extends BaseActivity implements RESTRequestL
 			
 			//CurrentUser.performLogin(this, savedInstanceState);
 		}
-		
+		Log.e("<message>", CurrentUser.getCurrentUser().getType()+"");
 		setContentView(R.layout.activity_set_temperature);
 		
-//		System.out.println("------------------------- lookhere");
-		
-//		userCredentials = getSharedPreferences("userCredentials", MODE_PRIVATE);
-//		
-//		// When the intent contains a parceled user instance, the user just logged in
-//		Intent intent = getIntent();
-//		
-//		currentUser = intent.getParcelableExtra("user");
-//		
-//		// Login user
-//		if (!(currentUser instanceof User))
-//		{
-//			login(savedInstanceState);
-//			
-//			return;
-//		}
-//		
-//		setContentView(R.layout.activity_main);
-//		
-//		currentTemperatureTextView = (TextView) findViewById(R.id.currentTemperatureTextView);
-//		
-//		setTemperatureEditText = (EditText) findViewById(R.id.setTemperatureEditText);
-//		
-//		setTemperatureButton = (Button) findViewById(R.id.setTemperatureButton);
-//		
-//		setTemperatureButton.setOnClickListener(setTemperatureButtonOnClickListener);
-//		
-//		updateCurrentTemperature();
+	
+		currentTemperatureTextView = (TextView) findViewById(R.id.currentTemperatureTextView);	
+		setTemperatureEditText = (EditText) findViewById(R.id.setTemperatureEditText);	
+		setTemperatureButton = (Button) findViewById(R.id.setTemperatureButton);
+		setTemperatureButton.setOnClickListener(setTemperatureButtonOnClickListener);
+		if(CurrentUser.getCurrentUser().getType() == User.Type.SUPER_USER.getValue()){
+			setTemperatureButton.setVisibility(View.VISIBLE);			
+		}
+		else if(CurrentUser.getCurrentUser().getType() == User.Type.NORMAL_USER.getValue()){
+			setTemperatureButton.setVisibility(View.GONE);
+		}
+
+		//updateCurrentTemperature();
 	}
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
-//	    switch (item.getItemId())
-//	    {
-//		    case R.id.action_logout:
-//		    	
-//		    	CurrentUser.logout();
-//		        
-//		    	startActivity(new Intent(this, LoginActivity.class));
-//		    	
-//		        return true;
-//		    	
-//		    default:
-//		        return super.onOptionsItemSelected(item);
-//	    }
-		
 		return false;
 	}
 	
@@ -120,8 +90,6 @@ public class SetTemperatureActivity extends BaseActivity implements RESTRequestL
 	public void onRestoreInstanceState(Bundle savedInstanceState)
 	{
 		super.onRestoreInstanceState(savedInstanceState);
-		
-		currentUser = savedInstanceState.getParcelable(CURRENT_USER_KEY);
 	}
 	
 //	@Override
@@ -160,7 +128,7 @@ public class SetTemperatureActivity extends BaseActivity implements RESTRequestL
 		if (temperature == null ||
 			temperature.length() <= 0)
 		{
-			AlertDialog.Builder builder = new AlertDialog.Builder(SetTemperatureActivity.this);
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
 			builder.setMessage(R.string.main_empty_temperature);
 			builder.setPositiveButton(R.string.ok, null);
@@ -172,7 +140,7 @@ public class SetTemperatureActivity extends BaseActivity implements RESTRequestL
 		// Create new RESTRequest instance and fill it with user data
 		RESTRequest restRequest = new RESTRequest(Config.REST_REQUEST_BASE_URL + Config.REST_REQUEST_SET_TEMPERATURE, SET_TEMPERATURE_ID);
 		
-		restRequest.putString("sessionID"  , currentUser.getSessionID());
+		restRequest.putString("sessionID"  , CurrentUser.getCurrentUser().getSessionID());
 		restRequest.putString("temperature", temperature);
 		
 		restRequest.addEventListener(this);
@@ -188,7 +156,7 @@ public class SetTemperatureActivity extends BaseActivity implements RESTRequestL
 		// Create new RESTRequest instance and fill it with user data
 		RESTRequest restRequest = new RESTRequest(Config.REST_REQUEST_BASE_URL + Config.REST_REQUEST_TEMPERATURE, GET_CURRENT_TEMPERATURE_ID);
 		
-		restRequest.putString("sessionID", currentUser.getSessionID());
+		restRequest.putString("sessionID", CurrentUser.getCurrentUser().getSessionID());
 		
 		restRequest.addEventListener(this);
 		
