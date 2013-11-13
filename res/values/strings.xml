@@ -81,5 +81,6 @@
     <!-- Exceptions -->
     <string name="error_unknown_exception">An unknown error occurred</string>
     <string name="tab_content_not_found_exception">No content was found for this tab</string>
+    <string name="no_users_found_exception">No users were found</string>
 
 </resources>

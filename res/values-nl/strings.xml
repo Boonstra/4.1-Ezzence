@@ -81,5 +81,6 @@
     <!-- Exceptions -->
     <string name="error_unknown_exception">Een onbekende foutmelding is opgetreden</string>
     <string name="tab_content_not_found_exception">Geen inhoud voor deze tab gevonden</string>
+    <string name="no_users_found_exception">Geen gebruikers gevonden</string>
 
 </resources>
