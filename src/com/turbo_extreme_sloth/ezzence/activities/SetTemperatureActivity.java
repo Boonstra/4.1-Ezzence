@@ -1,18 +1,14 @@
 package com.turbo_extreme_sloth.ezzence.activities;
 
-import java.util.Date;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,11 +17,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.turbo_extreme_sloth.ezzence.exceptions.UncaughtExceptionHandler;
 import com.turbo_extreme_sloth.ezzence.CurrentUser;
 import com.turbo_extreme_sloth.ezzence.R;
 import com.turbo_extreme_sloth.ezzence.User;
 import com.turbo_extreme_sloth.ezzence.config.Config;
+import com.turbo_extreme_sloth.ezzence.exceptions.UncaughtExceptionHandler;
 import com.turbo_extreme_sloth.ezzence.rest.RESTRequest;
 import com.turbo_extreme_sloth.ezzence.rest.RESTRequestEvent;
 import com.turbo_extreme_sloth.ezzence.rest.RESTRequestListener;
