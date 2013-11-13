@@ -185,10 +185,7 @@ public class LoginActivity extends Activity implements RESTRequestListener
 			JSONObject jsonObject = new JSONObject(result);
 			
 			String message   = jsonObject.getString("message");
-			String sessionID = jsonObject.getString("sessionID");
-			
-			int userType = jsonObject.getInt("userType");
-			
+
 			// Show a message when user is blocked
 			if ("blocked".equals(message))
 			{
@@ -196,11 +193,14 @@ public class LoginActivity extends Activity implements RESTRequestListener
 
 				builder.setTitle(R.string.login_failed);
 				builder.setMessage(R.string.login_blocked);
-				builder.setPositiveButton(R.string.ok, null);		
+				builder.setPositiveButton(R.string.ok, null);
 				builder.show();
 				
 				return;
 			}
+			
+			String sessionID = jsonObject.getString("sessionID");
+			int userType     = jsonObject.getInt("userType");
 			
 			// Message should be equal to success and sessionID should be available to be logged in successfully
 			if (!"success".equals(message) ||
