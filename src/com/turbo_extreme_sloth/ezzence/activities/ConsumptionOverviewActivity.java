@@ -25,13 +25,13 @@ public class ConsumptionOverviewActivity extends BaseActivity implements RESTReq
 	 */
 	protected enum Tab
 	{
-		MONDAY    ("Monday"         , R.string.monday),
-		TUESDAY   ("Tuesday"        , R.string.tuesday),
-		WEDNESDAY ("Wednesday"      , R.string.wednesday),
-		THURSDAY  ("Thursday"       , R.string.thursday),
-		FRIDAY    ("Friday"         , R.string.friday),
-		SATURDAY  ("Saturday"       , R.string.saturday),
-		SUNDAY    ("Sunday"         , R.string.sunday),
+		MONDAY    ("monday"         , R.string.monday),
+		TUESDAY   ("tuesday"        , R.string.tuesday),
+		WEDNESDAY ("wednesday"      , R.string.wednesday),
+		THURSDAY  ("thursday"       , R.string.thursday),
+		FRIDAY    ("friday"         , R.string.friday),
+		SATURDAY  ("saturday"       , R.string.saturday),
+		SUNDAY    ("sunday"         , R.string.sunday),
 		WEEKLY    ("weeklyAverages" , R.string.weekly_averages),
 		MONTHLY   ("monthlyAverages", R.string.monthly_averages);
 		
