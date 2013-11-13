@@ -1,5 +1,6 @@
 package com.turbo_extreme_sloth.ezzence.activities;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import android.content.Intent;
@@ -17,6 +18,7 @@ import android.widget.ListView;
 
 import com.turbo_extreme_sloth.ezzence.CurrentUser;
 import com.turbo_extreme_sloth.ezzence.R;
+import com.turbo_extreme_sloth.ezzence.User;
 import com.turbo_extreme_sloth.ezzence.core.ListOption;
 import com.turbo_extreme_sloth.ezzence.exceptions.UncaughtExceptionHandler;
 
@@ -64,16 +66,20 @@ public class MainActivity extends BaseActivity implements OnItemClickListener
 	 */
 	private ListOption[] getOptions()
 	{
-		ListOption[] options = null;
+		ArrayList<ListOption> optionsArrayList = new ArrayList<ListOption>();
 		
-		options = new ListOption[]
+		optionsArrayList.add(new ListOption(getString(R.string.set_temperature), SetTemperatureActivity.class));
+		
+		// If super user
+		if (CurrentUser.getCurrentUser().getType() == User.Type.SUPER_USER.getValue())
 		{
-			new ListOption(getString(R.string.set_temperature), SetTemperatureActivity.class),
-			new ListOption(getString(R.string.consumption_overview), ConsumptionOverviewActivity.class),
-			new ListOption(getString(R.string.language), SetTemperatureActivity.class)
-		};
+			optionsArrayList.add(new ListOption(getString(R.string.consumption_overview), ConsumptionOverviewActivity.class));
+			optionsArrayList.add(new ListOption(getString(R.string.manage_priviliges), ManagePriviligesActivity.class));
+		}
+
+		optionsArrayList.add(new ListOption(getString(R.string.language), MainActivity.class));
 		
-		return options;
+		return optionsArrayList.toArray(new ListOption[]{ });
 	}
 	
 	/**

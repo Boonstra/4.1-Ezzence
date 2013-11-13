@@ -9,6 +9,7 @@
     <string name="unknown">Unknown</string>
     
     <!-- User priviliges -->
+    <string name="manage_priviliges">Manage priviliges</string>
     <string name="set_temperature_button_text">Set temperature</string>
     <string name="request_set_temperature_button_text">Request temperature</string>
 

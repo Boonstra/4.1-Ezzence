@@ -9,6 +9,7 @@
     <string name="unknown">Onbekend</string>
     
     <!-- User priviliges -->
+    <string name="manage_priviliges">Gebruikersrechten beheren</string>
     <string name="set_temperature_button_text">Temperatuur instellen</string>
     <string name="request_set_temperature_button_text">Temperatuur aanvragen</string>
     
