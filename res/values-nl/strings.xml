@@ -63,8 +63,8 @@
 
     <!-- Session unlock -->
     <string name="unlock_pin_hint">Lokale PIN</string>
-    <string name="unlock_button_text">Open</string>
-    <string name="unlock_failed">Openen mislukt</string>
+    <string name="unlock_button_text">Ontgrendel</string>
+    <string name="unlock_failed">Ontgrendelen mislukt</string>
     <string name="unlock_wrong_pin">Lokale PIN is incorrect</string>
     <string name="unlock_change_pin_button_text">Verander lokale PIN</string>
 
@@ -73,6 +73,6 @@
 
     <!-- Exceptions -->
     <string name="error_unknown_exception">Een onbekende foutmelding is opgetreden</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="tab_content_not_found_exception">Geen inhoud voor deze tab gevonden</string>
 
 </resources>
