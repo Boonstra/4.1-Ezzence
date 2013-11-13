@@ -94,6 +94,9 @@ public class UnlockActivity extends BaseActivity implements RESTRequestListener
 //			
 //			restRequest.execute();
 			
+			// Reset number of failed logins
+			SharedPreferencesHelper.deleteConsecutiveFailedLoginAttempts(this);
+			
 			CurrentUser.setCurrentUser(user);
 			
 			startActivity(new Intent(this, MainActivity.class));
