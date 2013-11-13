@@ -3,17 +3,16 @@ package com.turbo_extreme_sloth.ezzence.activities;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TableLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.turbo_extreme_sloth.ezzence.CurrentUser;
 import com.turbo_extreme_sloth.ezzence.R;
-import com.turbo_extreme_sloth.ezzence.SharedPreferencesHelper;
 import com.turbo_extreme_sloth.ezzence.config.Config;
 import com.turbo_extreme_sloth.ezzence.rest.RESTRequest;
 import com.turbo_extreme_sloth.ezzence.rest.RESTRequestEvent;
@@ -21,12 +20,77 @@ import com.turbo_extreme_sloth.ezzence.rest.RESTRequestListener;
 
 public class ConsumptionOverviewActivity extends BaseActivity implements RESTRequestListener
 {
+	/**
+	 * This enumeration is used to store the data about all possible tabs.
+	 */
+	protected enum Tab
+	{
+		MONDAY    ("Monday"         , R.string.monday),
+		TUESDAY   ("Tuesday"        , R.string.tuesday),
+		WEDNESDAY ("Wednesday"      , R.string.wednesday),
+		THURSDAY  ("Thursday"       , R.string.thursday),
+		FRIDAY    ("Friday"         , R.string.friday),
+		SATURDAY  ("Saturday"       , R.string.saturday),
+		SUNDAY    ("Sunday"         , R.string.sunday),
+		WEEKLY    ("weeklyAverages" , R.string.weekly_averages),
+		MONTHLY   ("monthlyAverages", R.string.monthly_averages);
+		
+		private String key;
+		
+		private int titleID;
+		
+		public JSONObject dataJSONObject;
+		
+		/**
+		 * Constructor
+		 * 
+		 * @param key
+		 * @param titleID
+		 */
+		private Tab(String key, int titleID)
+		{
+			this.key     = key;
+			this.titleID = titleID;
+		}
+		
+		public String getKey()
+		{
+			return key;
+		}
+		
+		public int getTitleID()
+		{
+			return titleID;
+		}
+		
+		/**
+		 * Searches for a tab by key. Returns null if no tab is found.
+		 * 
+		 * @param key
+		 * @return tab | null
+		 */
+		public static Tab getByKey(String key)
+		{
+			for (Tab tab : Tab.values())
+			{
+				if (tab.getKey().equals(key))
+				{
+					return tab;
+				}
+			}
+			
+			return null;
+		}
+	}
+	
 	/** Elements */
 	protected LinearLayout tabsLinearLayout;
 	
-	protected TableLayout dataTableLayout;
+	protected LinearLayout dataLinearLayout;
 	
 	protected ProgressDialog progressDialog;
+	
+	protected Button activeTabButton;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -36,7 +100,7 @@ public class ConsumptionOverviewActivity extends BaseActivity implements RESTReq
 		
 		tabsLinearLayout = (LinearLayout) findViewById(R.id.activity_consumption_overview_tabs);
 		
-		dataTableLayout = (TableLayout) findViewById(R.id.activity_consumption_overview_data);
+		dataLinearLayout = (LinearLayout) findViewById(R.id.activity_consumption_overview_data);
 		
 		// Load data from server
 		RESTRequest restRequest = new RESTRequest(Config.REST_REQUEST_BASE_URL + Config.REST_REQUEST_USAGE_STATS);
@@ -73,45 +137,172 @@ public class ConsumptionOverviewActivity extends BaseActivity implements RESTReq
 			return;
 		}
 		
+		JSONObject jsonObject;
+		
 		try
 		{
 			// Parse JSON
-			JSONObject jsonObject = new JSONObject(result);
+			jsonObject = new JSONObject(result);
 			
+			String message = jsonObject.getString("message");
 			
+			// Check if request was performed successfully
+			if (!"success".equals(message))
+			{
+				Toast.makeText(getApplicationContext(), getResources().getString(R.string.rest_not_found), Toast.LENGTH_SHORT).show();
+				
+				return;
+			}
+			
+			loadTabsFromJSONData(jsonObject);
 		}
-		catch (JSONException e) { }
+		catch (JSONException e)
+		{
+			Toast.makeText(getApplicationContext(), getResources().getString(R.string.rest_not_found), Toast.LENGTH_SHORT).show();
+			
+			return;
+		}
+	}
+	
+	/**
+	 * Dynamically creates tabs from the available JSON data using the Tab enum.
+	 * 
+	 * @param jsonObject
+	 */
+	private void loadTabsFromJSONData(JSONObject jsonObject)
+	{
+		// Create all available tabs
+		for (Tab tab : Tab.values())
+		{
+			JSONObject tabDataJSONObject;
+			
+			try
+			{
+				// Get JSON data
+				tabDataJSONObject = jsonObject.getJSONObject(tab.getKey());
+				
+				tab.dataJSONObject = tabDataJSONObject;
+			}
+			catch (JSONException e)
+			{
+				continue;
+			}
+			
+			// Create tab button
+			Button tabButton = new Button(this);
+			
+			tabButton.setText(tab.getTitleID());
+			tabButton.setTag(tab.getKey());
+			
+			tabButton.setBackgroundColor(getResources().getColor(R.color.light_grey));
+			
+			// Add click listener
+			tabButton.setOnClickListener(handleTabButtonClick(tabButton));
+			
+			tabsLinearLayout.addView(tabButton);
+			
+			// Set the Monday tab button as the currently active tab button
+			if (tab.getKey().equals(Tab.MONDAY.getKey()))
+			{
+				setActiveTab(tabButton);
+			}
+		}
+	}
+	
+	/**
+	 * Handles the click event of a tab button
+	 */
+	private View.OnClickListener handleTabButtonClick(final Button tabButton)
+	{
+		return new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				setActiveTab(tabButton);
+			}
+		};
+	}
+	
+	/**
+	 * Sets the passed tab button as the current tab button
+	 */
+	private void setActiveTab(Button tabButton)
+	{
+		// Set color of previously active tab button back to normal
+		if (activeTabButton instanceof Button)
+		{
+			activeTabButton.setBackgroundColor(getResources().getColor(R.color.light_grey));
+		}
+
+		activeTabButton = tabButton;
 		
-//		// Correct login, start main activity
-//		if (user.isLoggedIn())
-//		{
-//			SharedPreferencesHelper.storeUser(this, user);
-//			
-//			CurrentUser.setCurrentUser(user);
-//			
-//			startActivity(new Intent(this, MainActivity.class));
-//			
-//			finish();
-//		}
-//		else
-//		{
-//			String message = event.getMessageFromResult();
-//			
-//			// The server couldn't be reached, as no message is set
-//			if (message == null)
-//			{
-//				Toast.makeText(getApplicationContext(), getResources().getString(R.string.rest_not_found), Toast.LENGTH_SHORT).show();
-//			}
-//			// The server did not accept the passed user credentials
-//			else
-//			{
-//				AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-//
-//				builder.setTitle(R.string.login_failed);
-//				builder.setMessage(R.string.login_wrong_credentials);
-//				builder.setPositiveButton(R.string.ok, null);			
-//				builder.show();
-//			}
-//		}
+		tabButton.setBackgroundColor(getResources().getColor(R.color.light_blue));
+		
+		// Get tab from button's key
+		Tab tab = Tab.getByKey((String) tabButton.getTag());
+		
+		// Check if tab was retrieved correctly, end operation otherwise
+		if (!(tab instanceof Tab) ||
+			!(tab.dataJSONObject instanceof JSONObject))
+		{
+			Toast.makeText(this, getString(R.string.tab_content_not_found_exception), Toast.LENGTH_SHORT).show();
+			
+			return;
+		}
+		
+		try
+		{
+			JSONObject tabDataJSONObject = tab.dataJSONObject;
+			
+			String gas         = tabDataJSONObject.getString("gas");
+			String water       = tabDataJSONObject.getString("water");
+			String electricity = tabDataJSONObject.getString("electricity");
+			
+			if (gas == null ||
+				gas.length() <= 0)
+			{
+				gas = getString(R.string.unknown);
+			}
+			
+			if (water == null ||
+				water.length() <= 0)
+			{
+				water = getString(R.string.unknown);
+			}
+			
+			if (electricity == null ||
+				electricity.length() <= 0)
+			{
+				electricity = getString(R.string.unknown);
+			}
+			
+			// Prepare the tab content layout
+			View tabContentView = getLayoutInflater().inflate(R.layout.consumption_overview_tab_content, dataLinearLayout);
+
+			// Get text views
+			TextView gasTextView         = (TextView) tabContentView.findViewById(R.id.gasTextView);
+			TextView waterTextView       = (TextView) tabContentView.findViewById(R.id.waterTextView);
+			TextView electricityTextView = (TextView) tabContentView.findViewById(R.id.electricityTextView);
+			
+			if (gasTextView instanceof TextView)
+			{
+				gasTextView.setText(gas);
+			}
+			
+			if (waterTextView instanceof TextView)
+			{
+				waterTextView.setText(water);
+			}
+			
+			if (electricityTextView instanceof TextView)
+			{
+				electricityTextView.setText(electricity);
+			}
+		}
+		catch (JSONException e)
+		{
+			Toast.makeText(this, getString(R.string.tab_content_not_found_exception), Toast.LENGTH_SHORT).show();
+		}
 	}
 }
