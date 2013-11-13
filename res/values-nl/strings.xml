@@ -56,6 +56,7 @@
     <string name="login_password_encryption_error">Wachtwoord kon niet veilig verstuurd worden</string>
     <string name="login_failed">Login foutmelding</string>
     <string name="login_wrong_credentials">Gebruikersnaam en wachtwoord combinatie incorrect</string>
+    <string name="login_blocked">Dit account is tijdelijk opgeschort</string>
 
     <!-- Session logout -->
     <string name="switch_user_button_text">Uitloggen</string>

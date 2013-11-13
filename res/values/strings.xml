@@ -56,6 +56,7 @@
     <string name="login_password_encryption_error">Password could not be send securely</string>
     <string name="login_failed">Login failed</string>
     <string name="login_wrong_credentials">User name and password are incorrect</string>
+    <string name="login_blocked">This account is temporarily suspended</string>
 
     <!-- Session logout -->
     <string name="switch_user_button_text">Log out</string>
