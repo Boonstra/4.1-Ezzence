@@ -137,12 +137,10 @@ public class ConsumptionOverviewActivity extends BaseActivity implements RESTReq
 			return;
 		}
 		
-		JSONObject jsonObject;
-		
 		try
 		{
 			// Parse JSON
-			jsonObject = new JSONObject(result);
+			JSONObject jsonObject = new JSONObject(result);
 			
 			String message = jsonObject.getString("message");
 			
