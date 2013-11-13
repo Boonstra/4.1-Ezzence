@@ -189,12 +189,26 @@ public class LoginActivity extends Activity implements RESTRequestListener
 			
 			int userType = jsonObject.getInt("userType");
 			
+			// Show a message when user is blocked
+			if ("blocked".equals(message))
+			{
+				AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+
+				builder.setTitle(R.string.login_failed);
+				builder.setMessage(R.string.login_blocked);
+				builder.setPositiveButton(R.string.ok, null);		
+				builder.show();
+				
+				return;
+			}
+			
 			// Message should be equal to success and sessionID should be available to be logged in successfully
-			if (message == null ||
-				!message.equals("success") ||
+			if (!"success".equals(message) ||
 				sessionID == null ||
 				sessionID.length() <= 0)
 			{
+				Toast.makeText(getApplicationContext(), getResources().getString(R.string.rest_not_found), Toast.LENGTH_SHORT).show();
+				
 				return;
 			}
 			
