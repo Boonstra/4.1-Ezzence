@@ -10,6 +10,7 @@ public class Config
 	public static final String REST_REQUEST_SET_TEMPERATURE         = "setTemperature.php";
 	public static final String REST_REQUEST_SET_TEMPERATURE_PROFILE = "setTemperatureProfile.php"; 
 	public static final String REST_REQUEST_USAGE_STATS             = "usageStats.php";
+	public static final String REST_REQUEST_GET_USERS               = "getUsers.php";
 	
 	/** Debug mode */
 	public static boolean DEBUG = true;

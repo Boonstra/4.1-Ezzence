@@ -8,9 +8,14 @@
     <string name="loading">Laden, een momentje graag</string>
     <string name="unknown">Onbekend</string>
     
+    <!-- User priviliges -->
+    <string name="set_temperature_button_text">Temperatuur instellen</string>
+    <string name="request_set_temperature_button_text">Temperatuur aanvragen</string>
+    
     <!-- Activity titles -->
     <string name="title_activity_change_pin">Verander PIN</string>
     <string name="title_activity_consumption_overview">Verbruiksoverzicht</string>
+    <string name="title_activity_manage_priviliges">Gebruikersrechten Beheren</string>
     <string name="title_activity_settings">Instellingen</string>
     <string name="title_activity_unlock">Ontgrendelen</string>
     
