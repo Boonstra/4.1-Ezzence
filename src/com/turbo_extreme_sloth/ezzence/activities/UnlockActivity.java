@@ -39,7 +39,7 @@ public class UnlockActivity extends BaseActivity implements RESTRequestListener
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-
+		
 		user = SharedPreferencesHelper.getUser(this);
 		
 		// If a user is not set, start the login activity
@@ -108,6 +108,28 @@ public class UnlockActivity extends BaseActivity implements RESTRequestListener
 			builder.setMessage(R.string.unlock_wrong_pin);
 			builder.setPositiveButton(R.string.ok, null);			
 			builder.show();
+			
+			int consecutiveFailedLoginAttempts = SharedPreferencesHelper.getConsecutiveFailedLoginAttempts(this);
+			
+			consecutiveFailedLoginAttempts++;
+			
+			// Three or more failed unlock attempts, log user out
+			if (consecutiveFailedLoginAttempts >= 3)
+			{
+				SharedPreferencesHelper.deleteConsecutiveFailedLoginAttempts(this);
+				
+				// Unset user to be able to login again
+				CurrentUser.unsetCurrentUser(this);
+
+				startActivity(new Intent(this, LoginActivity.class));
+				
+				finish();
+				
+				return;
+			}
+			
+			// Store number of consecutive failed login attempts
+			SharedPreferencesHelper.storeConsecutiveFailedLoginAttempts(this, consecutiveFailedLoginAttempts);
 		}
 	}
 

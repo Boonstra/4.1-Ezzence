@@ -65,4 +65,50 @@ public class SharedPreferencesHelper
 		
 		preferencesEditor.apply();
 	}
+	
+	/**
+	 * Get the number of consecutive failed login attempts.
+	 * 
+	 * @param context
+	 * @return consecutiveFailedLoginAttempts
+	 */
+	public static int getConsecutiveFailedLoginAttempts(Context context)
+	{
+		SharedPreferences sharedPreferences = context.getSharedPreferences("consecutiveFailedLoginAttempts", Context.MODE_PRIVATE); 
+		
+		return sharedPreferences.getInt("consecutiveFailedLoginAttempts", 0);
+	}
+	
+	/**
+	 * Stores the number of consecutive failed login attempts.
+	 * 
+	 * @param context
+	 * @param consecutiveFailedLoginAttempts
+	 */
+	public static void storeConsecutiveFailedLoginAttempts(Context context, int consecutiveFailedLoginAttempts)
+	{
+		SharedPreferences sharedPreferences = context.getSharedPreferences("consecutiveFailedLoginAttempts", Context.MODE_PRIVATE);
+		
+		SharedPreferences.Editor preferencesEditor = sharedPreferences.edit();
+		
+		preferencesEditor.putInt("consecutiveFailedLoginAttempts" , consecutiveFailedLoginAttempts);
+		
+		preferencesEditor.apply();
+	}
+	
+	/**
+	 * Delete the number of consecutive failed login attempts.
+	 * 
+	 * @param context
+	 */
+	public static void deleteConsecutiveFailedLoginAttempts(Context context)
+	{
+		SharedPreferences sharedPreferences = context.getSharedPreferences("consecutiveFailedLoginAttempts", Context.MODE_PRIVATE);
+		
+		SharedPreferences.Editor preferencesEditor = sharedPreferences.edit();
+
+		preferencesEditor.remove("consecutiveFailedLoginAttempts");
+		
+		preferencesEditor.apply();
+	}
 }
