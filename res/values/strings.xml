@@ -7,16 +7,17 @@
     <string name="ok">OK</string>
     <string name="loading">Loading, please wait</string>
     <string name="unknown">Unknown</string>
+    <string name="none">None</string>
     
-    <!-- User priviliges -->
-    <string name="manage_priviliges">Manage priviliges</string>
+    <!-- User privileges -->
+    <string name="manage_privileges">Manage privileges</string>
     <string name="set_temperature_button_text">Set temperature</string>
     <string name="request_set_temperature_button_text">Request temperature</string>
 
     <!-- Activity titles -->
     <string name="title_activity_change_pin">Change PIN</string>
     <string name="title_activity_consumption_overview">Consumption Overview</string>
-    <string name="title_activity_manage_priviliges">Manage Priviliges</string>
+    <string name="title_activity_manage_privileges">Manage Privileges</string>
     <string name="title_activity_settings">Settings</string>
     <string name="title_activity_unlock">Unlock</string>
 
@@ -82,5 +83,6 @@
     <string name="error_unknown_exception">An unknown error occurred</string>
     <string name="tab_content_not_found_exception">No content was found for this tab</string>
     <string name="no_users_found_exception">No users were found</string>
+    <string name="set_privilege_failed_exception">Privilege could not be granted</string>
 
 </resources>

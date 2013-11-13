@@ -74,7 +74,7 @@ public class MainActivity extends BaseActivity implements OnItemClickListener
 		if (CurrentUser.getCurrentUser().getType() == User.Type.SUPER_USER.getValue())
 		{
 			optionsArrayList.add(new ListOption(getString(R.string.consumption_overview), ConsumptionOverviewActivity.class));
-			optionsArrayList.add(new ListOption(getString(R.string.manage_priviliges), ManagePriviligesActivity.class));
+			optionsArrayList.add(new ListOption(getString(R.string.manage_privileges), ManagePrivilegesActivity.class));
 		}
 
 		optionsArrayList.add(new ListOption(getString(R.string.language), MainActivity.class));

@@ -52,8 +52,8 @@
             android:label="@string/title_activity_settings" >
         </activity>
         <activity
-            android:name="com.turbo_extreme_sloth.ezzence.activities.ManagePriviligesActivity"
-            android:label="@string/title_activity_manage_priviliges" >
+            android:name="com.turbo_extreme_sloth.ezzence.activities.ManagePrivilegesActivity"
+            android:label="@string/title_activity_manage_privileges" >
         </activity>
     </application>
 

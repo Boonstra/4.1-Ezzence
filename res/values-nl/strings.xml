@@ -7,16 +7,17 @@
     <string name="ok">OK</string>
     <string name="loading">Laden, een momentje graag</string>
     <string name="unknown">Onbekend</string>
+    <string name="none">Geen</string>
     
-    <!-- User priviliges -->
-    <string name="manage_priviliges">Gebruikersrechten beheren</string>
+    <!-- User privileges -->
+    <string name="manage_privileges">Gebruikersrechten beheren</string>
     <string name="set_temperature_button_text">Temperatuur instellen</string>
     <string name="request_set_temperature_button_text">Temperatuur aanvragen</string>
     
     <!-- Activity titles -->
     <string name="title_activity_change_pin">Verander PIN</string>
     <string name="title_activity_consumption_overview">Verbruiksoverzicht</string>
-    <string name="title_activity_manage_priviliges">Gebruikersrechten Beheren</string>
+    <string name="title_activity_manage_privileges">Gebruikersrechten Beheren</string>
     <string name="title_activity_settings">Instellingen</string>
     <string name="title_activity_unlock">Ontgrendelen</string>
     
@@ -82,5 +83,6 @@
     <string name="error_unknown_exception">Een onbekende foutmelding is opgetreden</string>
     <string name="tab_content_not_found_exception">Geen inhoud voor deze tab gevonden</string>
     <string name="no_users_found_exception">Geen gebruikers gevonden</string>
+    <string name="set_privilege_failed_exception">De rechten konden niet worden toegekend</string>
 
 </resources>
